@@ -22,9 +22,36 @@
             ]
           },
           {
+            "group": "Setting Up Your Organisation",
+            "pages": [
+              "admin-guide/inviting-team-members",
+              "admin-guide/plans-and-limits"
+            ]
+          },
+          {
             "group": "Managing Rosters",
             "pages": [
               "admin-guide/importing-csv"
+            ]
+          },
+          {
+            "group": "Running Sessions",
+            "pages": [
+              "admin-guide/creating-a-session",
+              "admin-guide/reviewing-photos",
+              "admin-guide/exporting"
+            ]
+          },
+          {
+            "group": "Syncing Data",
+            "pages": [
+              "admin-guide/understanding-changesets"
+            ]
+          },
+          {
+            "group": "ID Card Printing",
+            "pages": [
+              "admin-guide/creating-card-templates"
             ]
           },
           {

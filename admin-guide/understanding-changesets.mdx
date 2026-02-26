@@ -1,0 +1,92 @@
+---
+title: "Understanding ChangeSets"
+description: "How to sync session data back to your Master List using ChangeSets."
+---
+
+A **ChangeSet** is a reviewed batch of changes that syncs data from a session back to a Master List. It's how you push approved photos and field updates to your central roster after a capture session.
+
+## Why ChangeSets exist
+
+When you create a session from a Master List, CaptrID takes a **snapshot** — a point-in-time copy. The session and the Master List are independent until you explicitly sync them.
+
+ChangeSets provide:
+- **Review before applying** — See exactly what will change before it's written
+- **Conflict detection** — If both the session and Master List changed the same field, CaptrID flags it
+- **Rollback** — Undo applied changes if something went wrong
+
+## Generating a ChangeSet
+
+1. Open your session
+2. Click **Generate ChangeSet** (available when the session has changes to sync)
+3. CaptrID compares each session record to the Master List and generates a list of proposed changes
+
+## Types of changes
+
+| Type | Description | Auto-approved? |
+|------|-------------|----------------|
+| **Create** | New person added during the session, not in the Master List | No — needs review |
+| **Update** | Existing person with field changes | Yes, if no conflicts |
+| **Photo only** | Only the photo changed, no field changes | Yes, if Master List has no existing photo |
+
+## Reviewing a ChangeSet
+
+Open the ChangeSet from the session to see all proposed changes. For each item, you can:
+
+| Action | Effect |
+|--------|--------|
+| **Approve** | Accept the session value — it will overwrite the Master List |
+| **Reject** | Discard this change — keep the Master List as-is |
+| **Skip** | Don't sync this item now — leave it for later |
+
+Use **Accept All Session Changes** to quickly approve everything if you trust the session data.
+
+## Conflicts
+
+A **conflict** occurs when both the session and the Master List changed the same field since the snapshot was taken.
+
+For example:
+- At snapshot time: First Name = "John"
+- Session changed it to "Johnny"
+- Meanwhile, a directory sync changed the Master List to "Jonathan"
+- **Conflict**: CaptrID shows both values and asks you to choose
+
+For each conflicted field, you choose:
+- **Use session value** — Apply the session's version
+- **Use Master List value** — Keep what's already in the Master List
+
+<Info>
+If a field was only changed in the session (not in the Master List), there's no conflict — it's auto-approved.
+</Info>
+
+## Applying the ChangeSet
+
+Once you've resolved all items:
+
+1. Review the summary of approved, rejected, and skipped items
+2. Click **Apply ChangeSet**
+3. Changes are written to the Master List in a single transaction
+
+After applying:
+- Approved photos become the Master List person's photo
+- Field updates are written to the Master List
+- New people are created in the Master List
+- The ChangeSet is marked as "Applied" with a timestamp
+
+## Rolling back
+
+If you need to undo an applied ChangeSet:
+
+1. Open the ChangeSet (it will show as "Applied")
+2. Click **Rollback**
+3. All changes are reverted to the state before the ChangeSet was applied
+
+<Warning>
+Rollback restores the Master List to its state before the ChangeSet was applied. Any changes made to the Master List *after* the ChangeSet was applied are not affected.
+</Warning>
+
+## Best practices
+
+- **Generate ChangeSets after photo review is complete** — Don't sync until you've approved the photos you want
+- **Review conflicts carefully** — Especially if your Master List is synced from an external directory
+- **One ChangeSet at a time** — Process ChangeSets in order if multiple sessions point to the same Master List
+- **Use rollback sparingly** — It's a safety net, not a regular workflow tool

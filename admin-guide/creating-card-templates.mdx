@@ -1,0 +1,101 @@
+---
+title: "Creating Card Templates"
+description: "How to design ID card templates using the CaptrID card designer."
+---
+
+CaptrID includes a built-in card designer for creating professional ID cards. Templates are reusable — design once, print across multiple sessions.
+
+## Creating a template
+
+1. Go to **Card Design** in the sidebar
+2. Click **Create Template**
+3. Enter a name (e.g. "Student ID 2026" or "Staff Badge")
+4. The card designer opens
+
+## The card designer
+
+The designer has three panels:
+
+| Panel | Purpose |
+|-------|---------|
+| **Left** | Element palette — drag elements onto the canvas |
+| **Centre** | Canvas — your card design with drag, drop, and resize |
+| **Right** | Properties — styling and positioning for the selected element |
+
+### Adding elements
+
+Drag elements from the left panel onto the canvas:
+
+| Element | Use for |
+|---------|---------|
+| **Text** | Names, titles, department, any field data |
+| **Image** | Photo placeholder, logos, background images |
+| **Shape** | Rectangles, lines, decorative elements |
+| **Barcode** | Barcode from a UID or other field |
+| **QR Code** | QR code linking to a URL or containing data |
+
+### Using variables
+
+Text elements can include **variables** that are replaced with real data when you print. Variables use double curly braces:
+
+| Variable | Prints as |
+|----------|-----------|
+| `{{first_name}}` | Emma |
+| `{{last_name}}` | Wilson |
+| `{{student_id}}` | STU001 |
+| `{{year_level}}` | 7 |
+
+Variables are defined in the template's **variable schema**. When you link the template to a session, you map these variables to the session's actual fields.
+
+### Canvas tools
+
+- **Snap to grid** — Align elements precisely (configurable grid size)
+- **Guidelines** — Show alignment guides
+- **Zoom** — Zoom in/out for detail work
+- **Multi-select** — Select multiple elements and align them together
+- **Copy/paste** — Duplicate elements
+- **Undo/redo** — Up to 50 steps of history
+
+### Dual-sided cards
+
+Toggle **dual-sided mode** to design both the front and back of a card. Switch between sides using the toggle at the top of the canvas.
+
+## Previewing with real data
+
+Click **Preview** to see your template with actual data instead of placeholder text:
+
+1. Select a data source (session or Master List)
+2. Browse through records using the arrow buttons
+3. Check that fields, photos, and layout look correct with real content
+
+<Tip>
+Always preview with real data before printing. Variables that don't map to a field will show as blank — preview helps you catch missing mappings.
+</Tip>
+
+## Linking a template to a session
+
+Templates are organisation-level resources. To use a template with a specific session:
+
+1. Open your session and go to the **Card Design** tab
+2. Link an existing template
+3. **Map fields** — Connect the template's variables to the session's fields
+4. Set **default values** for any variables that don't have a matching field
+
+## Page setup
+
+Before printing, configure the page layout:
+
+- **Orientation** — Portrait or landscape
+- **Margins** — Space around the card on the printed page
+- **Bleed** — Extra area beyond the card edge for trimming
+
+## Exporting and printing
+
+From the card designer or the session's Card Design tab:
+
+- **Export as PDF** — Generate a print-ready PDF
+- **Print directly** — Send to your printer
+
+<Info>
+Templates can be linked to multiple sessions. Each session can have its own field mappings, so the same template design works across different rosters.
+</Info>

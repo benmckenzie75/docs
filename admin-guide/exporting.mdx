@@ -1,0 +1,59 @@
+---
+title: "Exporting Photos and Data"
+description: "How to export photos and roster data from a session."
+---
+
+Once you've reviewed and approved photos, you can export them from the **Export** tab of your session.
+
+## What you can export
+
+| Export type | What's included |
+|-------------|-----------------|
+| **CSV** | Spreadsheet of all person data with the fields you configured during session setup |
+| **ZIP** | All approved photos, renamed using your filename template |
+
+## Exporting photos
+
+1. Open your session and go to the **Export** tab
+2. Choose your export scope:
+   - **All approved** — Every person with an approved photo
+   - **Filtered** — A subset based on field values or status
+3. Click **Export**
+4. Download the ZIP file when it's ready
+
+### Filename templates
+
+Photos are renamed during export based on the filename template you configured when creating the session. Templates use field placeholders:
+
+| Example template | Result |
+|-----------------|--------|
+| `{uid}` | `STU001.jpg` |
+| `{last_name}_{first_name}` | `Wilson_Emma.jpg` |
+| `{uid}_{last_name}` | `STU001_Wilson.jpg` |
+
+<Tip>
+You can change the filename template after session creation from the session settings. This only affects future exports — previous exports keep their original filenames.
+</Tip>
+
+## Exporting data
+
+To export roster data as a CSV:
+
+1. Go to the **Export** tab
+2. Select **CSV export**
+3. Choose which fields to include
+4. Click **Export**
+
+The CSV includes one row per person with the fields you selected.
+
+## Export history
+
+Every export is logged. You can see previous exports and their details from the Export tab, including:
+- When the export was created
+- Who created it
+- How many records were included
+- The scope and filename template used
+
+<Warning>
+Exports are subject to your plan's limits. Check your current usage in **Billing** if an export is blocked.
+</Warning>
