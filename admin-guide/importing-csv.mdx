@@ -1,0 +1,88 @@
+---
+title: "Importing a CSV Roster"
+description: "How to bulk-import people from a CSV spreadsheet into a Master List or session."
+---
+
+CaptrID supports bulk importing people from CSV files into both **Master Lists** and **session rosters**. This is the fastest way to populate your roster if you have an existing spreadsheet of people.
+
+## Preparing your CSV file
+
+Your CSV file should follow these guidelines:
+
+| Requirement | Detail |
+|-------------|--------|
+| **Format** | Standard CSV (comma-separated values) |
+| **Encoding** | UTF-8 recommended (handles special characters and accents) |
+| **Header row** | First row must contain column names |
+| **UID column** | Must include a column for your unique identifier (e.g. Student ID, Employee Number) |
+| **No empty UID values** | Every row must have a value in the UID column |
+
+### Example CSV
+
+```csv
+student_id,first_name,last_name,year_level,house
+STU001,Emma,Wilson,7,Blue
+STU002,James,Chen,7,Red
+STU003,Sarah,Thompson,8,Green
+STU004,Michael,Patel,8,Blue
+```
+
+<Tip>
+Export your spreadsheet from Excel or Google Sheets using **File > Save As > CSV (UTF-8)**. This ensures special characters (accents, non-English names) are preserved correctly.
+</Tip>
+
+## Importing into a Master List
+
+1. Go to **Master Lists** in the sidebar
+2. Open the Master List you want to import into (or create a new one first)
+3. Click **Import** from the toolbar
+4. **Upload your CSV file** — drag and drop or click to browse
+5. **Map your columns** — CaptrID shows your CSV columns on the left and your Master List fields on the right:
+   - Columns with matching names are auto-mapped
+   - Manually map any unmatched columns
+   - Leave columns unmapped if you don't need that data
+6. **Map your UID field** — Select which CSV column corresponds to your Master List's UID field. This is required.
+7. **Preview the import** — Review the first few rows to confirm the mapping looks correct
+8. Click **Import**
+
+### What happens during import
+
+- **New UIDs** → New people are created in the Master List
+- **Existing UIDs** → Existing people are updated with the new data (upsert behaviour)
+- **Validation errors** → Rows with issues (missing UID, invalid data types) are flagged and skipped
+- After import, you'll see a summary: how many were created, updated, and skipped
+
+<Info>
+Importing **updates existing records** if the UID already exists. It does not create duplicates. This makes it safe to re-import an updated spreadsheet.
+</Info>
+
+## Importing into a Session
+
+You can also import a CSV directly into a session's roster during session creation or from the session detail screen.
+
+1. Open your session
+2. Go to the **Roster** tab
+3. Click **Import CSV**
+4. Follow the same mapping process as above
+5. The UID field used is the session's UID field (set during session creation)
+
+<Warning>
+Session imports are subject to your plan's **people limit**. If the import would exceed your limit, it will be blocked. Check your current usage in **Billing**.
+</Warning>
+
+## Common issues
+
+| Issue | Cause | Solution |
+|-------|-------|----------|
+| Special characters display incorrectly | CSV not saved as UTF-8 | Re-export from your spreadsheet using UTF-8 encoding |
+| "Duplicate UID" errors | Multiple rows have the same UID value | Remove duplicates from your CSV before importing |
+| Rows skipped with "missing UID" | Some rows have an empty UID column | Fill in the UID for every row, or remove rows without UIDs |
+| Column not appearing in mapping | Column header has leading/trailing spaces | Clean up your column headers in the spreadsheet |
+| Import seems to do nothing | All UIDs already exist with identical data | This is expected — no changes means no updates |
+
+## Tips
+
+- **Start small** — Import 5-10 rows first to verify the mapping, then import the full file
+- **Keep your UID consistent** — Use the same ID format across all imports (e.g. always "STU001", not sometimes "stu001" or "1")
+- **Re-import safely** — You can re-import an updated CSV at any time. Existing records are updated, not duplicated.
+- **Back up first** — If you're importing into a Master List with existing data, consider exporting the current data first as a backup

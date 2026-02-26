@@ -1,0 +1,113 @@
+---
+title: "Quick Start: Your First Photo Day"
+description: "Go from zero to capturing photos in five steps. This guide walks you through the complete workflow."
+---
+
+This guide walks you through the end-to-end workflow: creating a roster, setting up a session, assigning capturers, capturing photos, and reviewing the results. You can complete this in under 10 minutes.
+
+## Before you begin
+
+You'll need:
+- A CaptrID account (sign up at [captrid-admin.pages.dev](https://captrid-admin.pages.dev))
+- A list of people to photograph (CSV file or you can enter them manually)
+- At least one person with the mobile app installed to capture photos
+
+## Step 1: Create a Master List
+
+A **Master List** is your organisation's roster — the central record of everyone who needs to be photographed. You create it once and reuse it across multiple sessions.
+
+1. From the sidebar, click **Master Lists**
+2. Click **Create Master List**
+3. Enter a name (e.g. "Staff 2026" or "Students Term 1")
+4. Define your fields — at minimum you need:
+   - A **UID field** (unique identifier like Student ID, Employee Number, or Email)
+   - Name fields (First Name, Last Name)
+5. Click **Create**
+
+<Tip>
+Your UID field is the unique identifier that links people across sessions. Choose something stable like an employee number or student ID — not a name, since names can change or be duplicated.
+</Tip>
+
+### Adding people to your Master List
+
+You have three options:
+- **Import from CSV** — Bulk-upload from a spreadsheet. See the [CSV Import Guide](/admin-guide/importing-csv) for details.
+- **Manual entry** — Add people one by one from the Master List detail screen.
+- **Directory sync** — Connect to Microsoft Entra ID to auto-sync your roster (available on Pro plans and above).
+
+## Step 2: Create a Session
+
+A **Session** is a time-bound capture event — like "Photo Day 2026" or "New Starter Headshots".
+
+1. From the sidebar, click **All Sessions**
+2. Click **Create Session**
+3. The Session Wizard guides you through configuration:
+   - **Type**: Choose "Photo" for photo capture
+   - **Name**: Give it a clear name (e.g. "Staff Photo Day — March 2026")
+   - **Roster source**: Select your Master List to snapshot people into the session
+   - **Fields**: Configure which fields capturers can see and edit
+   - **Staff**: Assign capturers (see Step 3)
+4. Click **Create Session**
+
+<Info>
+When you create a session from a Master List, CaptrID takes a **snapshot** — a point-in-time copy. Changes in the session don't automatically affect your Master List (and vice versa). You sync changes back later using ChangeSets.
+</Info>
+
+## Step 3: Assign capturers
+
+Capturers are the people who will use the mobile app to take photos. They need to be invited to your organisation and assigned to the session.
+
+1. If they don't have an account yet, go to **User Management** and invite them by email
+2. In your session, go to the **Staff** tab
+3. Search for and assign your capturers
+4. They'll receive an email notification and see the session in their mobile app
+
+<Note>
+Capturers can only see sessions they're assigned to. They use the **mobile app** — they don't need access to the admin portal.
+</Note>
+
+## Step 4: Capture photos
+
+This step happens on the **mobile app** (iOS or Android).
+
+1. Capturers open the CaptrID app and sign in
+2. They select the session from their home screen
+3. They choose a person from the roster
+4. They take a photo using the in-app camera or choose from their gallery
+5. The app validates the image (resolution, lighting, blur, face detection)
+6. They submit the photo — it uploads immediately or queues for later if offline
+
+For detailed capturer instructions, see the [Capturer Guide](/capturer-guide/capturing-photos).
+
+<Tip>
+The mobile app works offline. Photos are queued locally and automatically uploaded when connectivity returns. No photos are lost.
+</Tip>
+
+## Step 5: Review and export
+
+Back in the admin portal:
+
+1. Open your session and go to the **Submissions** tab
+2. You'll see all submitted photos with their status
+3. For each photo, you can:
+   - **Approve** — Mark it as the accepted photo for that person
+   - **Reject** — Send it back with a reason (the capturer is notified)
+   - **Request retake** — Ask for a new photo with specific notes
+4. Once you've reviewed photos, go to the **Export** tab to download:
+   - **CSV** with all person data and photo references
+   - **ZIP** with renamed photo files using your filename template
+
+<Info>
+Only one photo per person can be approved at a time. Approving a new photo automatically supersedes the previous one.
+</Info>
+
+## What's next?
+
+<Columns cols={2}>
+  <Card title="Sync back to Master List" icon="arrows-rotate" href="/getting-started/key-concepts#changesets">
+    Use ChangeSets to push approved photos and data changes back to your Master List.
+  </Card>
+  <Card title="Print ID cards" icon="id-card" href="/getting-started/key-concepts#card-templates">
+    Design card templates and print professional ID cards from your session or Master List.
+  </Card>
+</Columns>
