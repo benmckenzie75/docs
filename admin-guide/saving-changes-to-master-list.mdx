@@ -1,23 +1,24 @@
 ---
-title: "Understanding ChangeSets"
-description: "How to sync session data back to your Master List using ChangeSets."
+title: "Saving Changes to Your Master List"
+description: "How to sync session data back to your Master List."
 ---
-
-A **ChangeSet** is a reviewed batch of changes that syncs data from a session back to a Master List. It's how you push approved photos and field updates to your central roster after a capture session.
-
-## Why ChangeSets exist
 
 When you create a session from a Master List, CaptrID takes a **snapshot** — a point-in-time copy. The session and the Master List are independent until you explicitly sync them.
 
-ChangeSets provide:
-- **Review before applying** — See exactly what will change before it's written
+This guide explains how to push approved photos and field updates back to your central roster after a capture session.
+
+## Why review before syncing?
+
+CaptrID never writes session data back to your Master List automatically. Instead, it generates a summary of proposed changes for you to review first. This gives you:
+
+- **Visibility** — See exactly what will change before it's written
 - **Conflict detection** — If both the session and Master List changed the same field, CaptrID flags it
 - **Rollback** — Undo applied changes if something went wrong
 
-## Generating a ChangeSet
+## Generating changes
 
 1. Open your session
-2. Click **Generate ChangeSet** (available when the session has changes to sync)
+2. Click **Save to Master List** on the Overview tab
 3. CaptrID compares each session record to the Master List and generates a list of proposed changes
 
 ## Types of changes
@@ -28,9 +29,9 @@ ChangeSets provide:
 | **Update** | Existing person with field changes | Yes, if no conflicts |
 | **Photo only** | Only the photo changed, no field changes | Yes, if Master List has no existing photo |
 
-## Reviewing a ChangeSet
+## Reviewing changes
 
-Open the ChangeSet from the session to see all proposed changes. For each item, you can:
+Open the review screen from the session to see all proposed changes. For each item, you can:
 
 | Action | Effect |
 |--------|--------|
@@ -58,35 +59,35 @@ For each conflicted field, you choose:
 If a field was only changed in the session (not in the Master List), there's no conflict — it's auto-approved.
 </Info>
 
-## Applying the ChangeSet
+## Applying changes
 
 Once you've resolved all items:
 
 1. Review the summary of approved, rejected, and skipped items
-2. Click **Apply ChangeSet**
+2. Click **Apply Changes**
 3. Changes are written to the Master List in a single transaction
 
 After applying:
 - Approved photos become the Master List person's photo
 - Field updates are written to the Master List
 - New people are created in the Master List
-- The ChangeSet is marked as "Applied" with a timestamp
+- The changes are marked as "Applied" with a timestamp
 
 ## Rolling back
 
-If you need to undo an applied ChangeSet:
+If you need to undo applied changes:
 
-1. Open the ChangeSet (it will show as "Applied")
+1. Open the review screen (it will show as "Applied")
 2. Click **Rollback**
-3. All changes are reverted to the state before the ChangeSet was applied
+3. All changes are reverted to the state before they were applied
 
 <Warning>
-Rollback restores the Master List to its state before the ChangeSet was applied. Any changes made to the Master List *after* the ChangeSet was applied are not affected.
+Rollback restores the Master List to its state before the changes were applied. Any changes made to the Master List *after* applying are not affected.
 </Warning>
 
 ## Best practices
 
-- **Generate ChangeSets after photo review is complete** — Don't sync until you've approved the photos you want
+- **Sync after photo review is complete** — Don't sync until you've approved the photos you want
 - **Review conflicts carefully** — Especially if your Master List is synced from an external directory
-- **One ChangeSet at a time** — Process ChangeSets in order if multiple sessions point to the same Master List
+- **One batch at a time** — Process changes in order if multiple sessions point to the same Master List
 - **Use rollback sparingly** — It's a safety net, not a regular workflow tool

@@ -45,7 +45,7 @@
           {
             "group": "Syncing Data",
             "pages": [
-              "admin-guide/understanding-changesets"
+              "admin-guide/saving-changes-to-master-list"
             ]
           },
           {
