@@ -1,9 +1,62 @@
 ---
-title: "Creating Card Templates"
-description: "How to design ID card templates using the CaptrID card designer."
+title: "Card Templates"
+description: "Understand how card templates work, from designing layouts to linking them to sessions for printing."
 ---
 
-CaptrID includes a built-in card designer for creating professional ID cards. Templates are reusable — design once, print across multiple sessions.
+CaptrID includes a built-in card designer for creating professional ID cards. Templates are **organisation-level resources** — design once, reuse across multiple sessions.
+
+## How templates work
+
+There are two levels of templates in CaptrID:
+
+| Level | Where | Purpose |
+|-------|-------|---------|
+| **Organisation template** | Card Design screen | Shared design, reusable across sessions |
+| **Session copy** | Session > Card Design tab | Customised version for a specific session |
+
+### Organisation templates
+
+These are your master designs. They live in the **Card Design** section of the sidebar and are available to all sessions in your organisation.
+
+- Create, edit, duplicate, and archive from the Card Design screen
+- Define **variables** (e.g. `{{first_name}}`, `{{student_id}}`) that get replaced with real data at print time
+- One template can be linked to many sessions
+
+### Session copies
+
+If a session needs a slightly different version of a template (e.g. an event logo, different fields), you can create a **session copy**:
+
+1. Open the session's **Card Design** tab
+2. Find the org template you want to customise
+3. Click **Customise for Session**
+4. A copy is created that belongs to this session only — edits won't affect the original
+
+<Info>
+Session copies don't count towards your plan's card template limit. Only organisation-level templates are counted.
+</Info>
+
+## Compatibility
+
+When you open a session's Card Design tab, CaptrID automatically checks which organisation templates are **compatible** with that session's fields.
+
+- **Compatible** — All variables used in the template exist in the session's fields. Ready to print.
+- **Incompatible** — Some variables don't match the session's fields. You can create a session copy and adjust the design.
+
+Compatibility is based on the template's **used variables** — only fields that actually appear on the card matter, not every variable in the schema.
+
+## Field mappings
+
+When a template's variable names don't exactly match a session's field names, **field mappings** bridge the gap.
+
+For example, if your template uses `{{first_name}}` but the session field is called `given_name`, you can map them:
+
+| Template variable | Session field |
+|-------------------|---------------|
+| `first_name` | `given_name` |
+| `last_name` | `family_name` |
+| `student_id` | `uid_value` |
+
+Field mappings are configured per session — the same template can use different mappings for different sessions. You can also set **default values** as fallbacks for missing fields.
 
 ## Creating a template
 
@@ -45,7 +98,7 @@ Text elements can include **variables** that are replaced with real data when yo
 | `{{student_id}}` | STU001 |
 | `{{year_level}}` | 7 |
 
-Variables are defined in the template's **variable schema**. When you link the template to a session, you map these variables to the session's actual fields.
+You can import variables from a Master List or session schema, or define them manually.
 
 ### Canvas tools
 
@@ -72,30 +125,30 @@ Click **Preview** to see your template with actual data instead of placeholder t
 Always preview with real data before printing. Variables that don't map to a field will show as blank — preview helps you catch missing mappings.
 </Tip>
 
-## Linking a template to a session
-
-Templates are organisation-level resources. To use a template with a specific session:
-
-1. Open your session and go to the **Card Design** tab
-2. Link an existing template
-3. **Map fields** — Connect the template's variables to the session's fields
-4. Set **default values** for any variables that don't have a matching field
-
 ## Page setup
 
 Before printing, configure the page layout:
 
 - **Orientation** — Portrait or landscape
 - **Margins** — Space around the card on the printed page
-- **Bleed** — Extra area beyond the card edge for trimming
 
 ## Exporting and printing
 
 From the card designer or the session's Card Design tab:
 
 - **Export as PDF** — Generate a print-ready PDF
-- **Print directly** — Send to your printer
+- **Print directly** — Send to your browser's print dialog
 
-<Info>
-Templates can be linked to multiple sessions. Each session can have its own field mappings, so the same template design works across different rosters.
-</Info>
+## Common workflows
+
+### Same template, multiple sessions
+
+Link one organisation template to several sessions. Each session gets its own field mappings, so the same design works with different roster schemas.
+
+### One-off event badge
+
+Create a session copy from an existing template, add the event logo and date, print for this session only. The original template stays unchanged.
+
+### Duplicating a template
+
+From the Card Design screen, duplicate an organisation template to create an independent copy. Unlike session copies, duplicates are full organisation templates that can be linked to any session.
