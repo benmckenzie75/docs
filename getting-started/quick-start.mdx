@@ -1,20 +1,24 @@
 ---
-title: "Quick Start: Your First Photo Day"
-description: "Go from zero to capturing photos in five steps. This guide walks you through the complete workflow."
+title: "Quick Start"
+description: "Go from zero to capturing photos or collecting data in five steps."
 ---
 
-This guide walks you through the end-to-end workflow: creating a roster, setting up a session, assigning capturers, capturing photos, and reviewing the results. You can complete this in under 10 minutes.
+This guide walks you through the end-to-end workflow: setting up a session, assigning capturers, capturing photos, and reviewing the results. You can complete this in under 10 minutes.
 
 ## Before you begin
 
 You'll need:
 - A CaptrID account (sign up at [captrid-admin.pages.dev](https://captrid-admin.pages.dev))
-- A list of people to photograph (CSV file or you can enter them manually)
+- Optionally, a list of people (CSV file or you can enter them manually)
 - At least one person with the mobile app installed to capture photos
 
-## Step 1: Create a Master List
+## Step 1: Set up your roster
 
-A **Master List** is your organisation's roster — the central record of everyone who needs to be photographed. You create it once and reuse it across multiple sessions.
+You have two options for getting people into CaptrID:
+
+### Option A: Create a Master List (recommended)
+
+A **Master List** is your organisation's central roster — create it once and reuse it across multiple sessions.
 
 1. From the sidebar, click **Master Lists**
 2. Click **Create Master List**
@@ -23,34 +27,34 @@ A **Master List** is your organisation's roster — the central record of everyo
    - A **UID field** (unique identifier like Student ID, Employee Number, or Email)
    - Name fields (First Name, Last Name)
 5. Click **Create**
+6. Add people via **CSV import**, **manual entry**, or **directory sync** (Pro plans and above)
 
 <Tip>
 Your UID field is the unique identifier that links people across sessions. Choose something stable like an employee number or student ID — not a name, since names can change or be duplicated.
 </Tip>
 
-### Adding people to your Master List
+### Option B: Start with a standalone session
 
-You have three options:
-- **Import from CSV** — Bulk-upload from a spreadsheet. See the [CSV Import Guide](/admin-guide/importing-csv) for details.
-- **Manual entry** — Add people one by one from the Master List detail screen.
-- **Directory sync** — Connect to Microsoft Entra ID to auto-sync your roster (available on Pro plans and above).
+If you don't have an existing roster, you can skip the Master List and create a session directly. People can be added manually or imported via CSV during session setup.
+
+This is a good option for one-off events or when you're just getting started.
 
 ## Step 2: Create a Session
 
-A **Session** is a time-bound capture event — like "Photo Day 2026" or "New Starter Headshots".
+A **Session** is a time-bound capture event — like "Photo Day 2026", "New Starter Headshots", or "Contact Details Update".
 
 1. From the sidebar, click **All Sessions**
 2. Click **Create Session**
 3. The Session Wizard guides you through configuration:
-   - **Type**: Choose "Photo" for photo capture
+   - **Type**: Choose "Photo" for photo capture or "Data" for data collection
    - **Name**: Give it a clear name (e.g. "Staff Photo Day — March 2026")
-   - **Roster source**: Select your Master List to snapshot people into the session
+   - **Roster source**: Select your Master List, import a CSV, or start with an empty roster
    - **Fields**: Configure which fields capturers can see and edit
    - **Staff**: Assign capturers (see Step 3)
 4. Click **Create Session**
 
 <Info>
-When you create a session from a Master List, CaptrID takes a **snapshot** — a point-in-time copy. Changes in the session don't automatically affect your Master List (and vice versa). You sync changes back later using ChangeSets.
+When you create a session from a Master List, CaptrID takes a **snapshot** — a point-in-time copy. Changes in the session don't affect your Master List until you explicitly sync them back.
 </Info>
 
 ## Step 3: Assign capturers
@@ -104,8 +108,8 @@ Only one photo per person can be approved at a time. Approving a new photo autom
 ## What's next?
 
 <Columns cols={2}>
-  <Card title="Sync back to Master List" icon="arrows-rotate" href="/getting-started/key-concepts#changeset">
-    Use ChangeSets to push approved photos and data changes back to your Master List.
+  <Card title="Save to Master List" icon="arrows-rotate" href="/getting-started/key-concepts#saving-to-master-list">
+    Push approved photos and data changes back to your Master List for safekeeping.
   </Card>
   <Card title="Print ID cards" icon="id-card" href="/getting-started/key-concepts#card-templates-1">
     Design card templates and print professional ID cards from your session or Master List.
