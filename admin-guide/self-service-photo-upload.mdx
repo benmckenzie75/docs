@@ -1,0 +1,141 @@
+---
+title: "Self-Service Photo Upload"
+description: "Let people upload their own ID photo via a secure link — no app, no account required."
+---
+
+Self-service photo upload lets you collect ID photos from people remotely. Instead of organising an on-site photo session, you send a secure link — the person clicks it, takes or uploads a photo, and submits it for your review. No app to install, no account to create.
+
+## How it works
+
+```
+You send a link → Person uploads a photo → You review and approve
+```
+
+1. **Enable self-upload** on a session and configure your settings
+2. **Send invitation links** to the people who need to submit photos
+3. **People upload** their photo via the link (works on any device with a browser)
+4. **You review** submissions in the normal approval queue — approve, reject, or request a retake
+
+Photos submitted via self-upload go through the same approval workflow as capturer-submitted photos. You'll see them in your session's **Submissions** tab alongside any on-site captures.
+
+## Setting up self-upload on a session
+
+1. Open your session
+2. Go to the session's self-upload settings
+3. Enable **Self-Service Upload**
+4. Configure your options:
+
+| Setting | Description |
+|---------|-------------|
+| **Email Field** | Which field in your roster contains the person's email address (e.g. "email") |
+| **Deadline** | Optional cut-off date displayed to subjects |
+| **Max Submissions** | How many attempts each person gets (1–3, default: 3) |
+| **Require Consent** | Show a consent checkbox before upload |
+| **Allow Resubmission After Rejection** | Let people retry if you reject their photo |
+| **Link Expiry** | How long each link stays valid (default: 72 hours) |
+
+5. Click **Save**
+
+<Tip>
+Self-upload works alongside on-site capture. You can send links to remote staff while also running a photo session for on-site people — all submissions end up in the same approval queue.
+</Tip>
+
+## Sending upload invitations
+
+Once self-upload is enabled:
+
+1. Select the people you want to invite (from the session roster)
+2. Click **Generate & Send Links**
+3. Each person receives an email with a personalised upload link
+
+The invitation email includes:
+- A personal greeting with their name
+- Your organisation and session name
+- Photo requirements (clear, front-facing, good lighting)
+- The deadline (if set)
+- A prominent **"Upload Photo"** button
+
+<Info>
+Each person gets a unique, single-use link. You can revoke a link at any time if needed. Only one active invitation per person per session is allowed.
+</Info>
+
+## What subjects see
+
+### Step 1: Landing page
+
+After clicking the link, the person sees a welcome page with:
+- Their name and your organisation's name
+- The session name and deadline
+- A consent checkbox (if required)
+- An **"Upload Photo"** button
+
+### Step 2: Choose a photo
+
+Two options:
+- **Take a photo** — opens their device's camera
+- **Upload from device** — select an existing photo from their files
+
+### Step 3: Crop and adjust
+
+A cropping tool lets them:
+- Adjust the frame to match the required aspect ratio (e.g. 3:4 portrait)
+- Zoom in or out
+- Rotate the image
+
+### Step 4: Review and submit
+
+They see a preview of their cropped photo and can choose to retake or submit.
+
+### Step 5: Confirmation
+
+After submitting, they see a confirmation message and receive a confirmation email. If they have remaining submissions (and their photo is later rejected), they can use the same link to try again.
+
+## Monitoring progress
+
+Track invitation status from your session:
+
+| Status | Meaning |
+|--------|---------|
+| **Sent** | Email delivered, awaiting action |
+| **Opened** | Person clicked the link |
+| **Submitted** | Photo uploaded and pending your review |
+| **Revoked** | You cancelled the invitation |
+
+## Reviewing self-uploaded photos
+
+Self-uploaded photos appear in your session's **Submissions** tab with all other submissions. The review process is identical:
+
+- **Approve** — accept the photo
+- **Reject** — send it back with a reason (the person is notified by email and can resubmit if allowed)
+- **Request retake** — ask for a new photo with specific notes
+
+<Info>
+When you reject a self-uploaded photo, the person receives an email notification. If resubmission is allowed and they haven't hit their submission limit, they can use their original link to upload a new photo.
+</Info>
+
+## Invitation statuses explained
+
+| Status | What happened | What the person can do |
+|--------|--------------|----------------------|
+| **Pending** | Invitation created but email not yet sent | Nothing (link not delivered) |
+| **Sent** | Email sent successfully | Click the link to upload |
+| **Opened** | Person clicked the link at least once | Upload a photo |
+| **Submitted** | Photo uploaded | Wait for review |
+| **Revoked** | Admin cancelled the invitation | Nothing (link shows error) |
+
+## Error messages subjects may see
+
+| Error | Cause | Solution |
+|-------|-------|----------|
+| "This link has expired" | Link past its expiry time | Admin generates a new link |
+| "This invitation has been revoked" | Admin cancelled it | Contact the admin |
+| "Session closed" | Session is no longer active | Contact the admin |
+| "Submission limit reached" | Used all allowed attempts | Contact the admin for a new invitation |
+
+## Tips
+
+- **Include email addresses in your roster** — Self-upload relies on having an email field to send invitation links
+- **Set a reasonable deadline** — Give people at least a week, and mention the deadline in any other communications
+- **Use 3 submission attempts** — This gives people room to retry if their first photo doesn't meet quality standards
+- **Check progress regularly** — Follow up with people who haven't opened their link
+- **Combine with on-site capture** — Send self-upload links to remote staff, and capture on-site staff at a photo session — submissions from both methods appear in the same queue

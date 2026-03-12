@@ -1,0 +1,115 @@
+---
+title: "Data Collection Sessions"
+description: "Create sessions for collecting or verifying data fields — without photos. Learn how data review and approval works."
+---
+
+A **data session** is a session for collecting or updating information — without photos. Use data sessions when you need to gather contact details, verify emergency contacts, collect dietary requirements, or update any field data at scale.
+
+Data sessions use the same roster, assignment, and approval concepts as photo sessions, but capturers submit field data instead of photos.
+
+## When to use a data session
+
+| Scenario | Session type |
+|----------|-------------|
+| Capture headshots for ID cards | Photo session |
+| Collect updated phone numbers from staff | **Data session** |
+| Verify emergency contact details | **Data session** |
+| Gather dietary requirements before an event | **Data session** |
+| Capture photos AND update contact info | Photo session (with editable fields) |
+
+## Creating a data session
+
+1. From the sidebar, click **All Sessions**
+2. Click **Create Session**
+3. In the Session Wizard, set **Type** to **Data**
+4. Configure your fields — for each field, decide:
+   - **Show to capturer** — whether the capturer sees it on the mobile app
+   - **Capturer can edit** — whether the capturer can change the value
+
+<Info>
+The **Capturer can edit** toggle is the sole control for field editability in data sessions. If a field is visible but not editable, capturers see it as read-only context (e.g. showing the person's name while they update their phone number).
+</Info>
+
+5. Choose a **data review mode** (see below)
+6. Assign capturers and create the session
+
+## Data review modes
+
+When creating a data session, you choose how submitted data is handled:
+
+| Mode | Behaviour | Best for |
+|------|-----------|----------|
+| **Review all** | Every submission goes to the review queue for admin approval | Sensitive data that needs checking |
+| **Review new only** | Only submissions for new people (not in the roster) need review | Verifying existing records with minimal admin effort |
+| **Auto-approve** | All submissions are automatically approved | Low-risk data collection where speed matters |
+
+<Tip>
+If you're not sure, start with **Review all**. You can always bulk-approve submissions if they look correct.
+</Tip>
+
+## How capturers submit data
+
+On the mobile app, capturers:
+
+1. Open the data session from their home screen
+2. Select a person from the roster (or add a new person, if allowed)
+3. See read-only context fields and editable data fields
+4. Fill in or update the editable fields
+5. Tap **Submit**
+
+The submission appears in the admin portal for review (unless auto-approve is enabled).
+
+For detailed capturer instructions, see the [Capturer Guide: Entering Data](/capturer-guide/data-entry).
+
+## Reviewing submitted data
+
+Open your data session and go to the review queue. Each submission shows:
+
+- The person's name and UID
+- The submitted field values
+- The current status
+
+### Submission statuses
+
+| Status | Meaning |
+|--------|---------|
+| **Pending** | Submitted, awaiting your review |
+| **Submitted** | Data received (used in some review modes) |
+| **Needs Revision** | You've flagged issues — capturer should resubmit |
+| **Approved** | Accepted as correct |
+
+### Approving and rejecting
+
+For each submission, you can:
+
+- **Approve** — Accept the data as correct
+- **Flag for Revision** — Send it back with notes explaining what needs to change
+- **Bulk approve** — Select multiple submissions and approve them at once
+
+### Flagging for revision
+
+When you flag a submission for revision:
+
+1. Click **Flag for Revision** on the submission
+2. Enter revision notes explaining what needs to change (e.g. "Please include area code with phone number")
+3. The capturer sees your notes on the mobile app next to the person's entry
+4. When the capturer resubmits, your revision notes are automatically cleared
+
+<Note>
+Revision notes are visible to the capturer on their next visit to that person's record. They'll see a banner with your feedback at the top of the data entry form.
+</Note>
+
+## Syncing data back to your Master List
+
+After reviewing and approving submissions, you can push the updated field values back to your Master List using [Save to Master List](/admin-guide/saving-changes-to-master-list). This works the same way as for photo sessions — CaptrID generates a changeset for you to review before anything is written.
+
+## What's next?
+
+<Columns cols={2}>
+  <Card title="Capturer Guide: Data Entry" icon="keyboard" href="/capturer-guide/data-entry">
+    Instructions for capturers submitting data on the mobile app.
+  </Card>
+  <Card title="Save to Master List" icon="arrows-rotate" href="/admin-guide/saving-changes-to-master-list">
+    Push approved data changes back to your Master List.
+  </Card>
+</Columns>

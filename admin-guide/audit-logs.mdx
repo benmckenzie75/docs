@@ -1,0 +1,79 @@
+---
+title: "Audit Logs"
+description: "View a complete record of who did what, when, and to which record — across your entire organisation."
+---
+
+CaptrID logs every significant action in your organisation automatically. Audit logs give you a complete, tamper-proof record of activity — useful for compliance, troubleshooting, and understanding who changed what.
+
+## Viewing audit logs
+
+1. From the sidebar, click **Audit Logs** (under the **Data** section)
+2. You'll see a chronological list of actions, most recent first
+
+Each log entry shows:
+
+| Field | Description |
+|-------|-------------|
+| **Action** | What happened (e.g. "Photo approved", "Session created") |
+| **Entity** | Which record was affected (with a link to it, if it still exists) |
+| **User** | Who performed the action |
+| **Date & time** | When it happened |
+| **Details** | Additional context (e.g. rejection reason, field values changed) |
+
+## Filtering and searching
+
+Use the filters at the top to narrow down the log:
+
+| Filter | Options |
+|--------|---------|
+| **Entity type** | Session, Submission, Master List, Person, Changeset, Card Template, Wallet Pass, Organisation |
+| **Action** | Created, Updated, Deleted, Approved, Rejected, Applied, Rolled Back, Erased |
+| **Date range** | From/to date picker |
+
+Filters combine with **AND** logic — for example, you can see all submissions that were rejected in the last 7 days.
+
+## Common action types
+
+| Action | When it's logged |
+|--------|-----------------|
+| `session.created` | A new session is created |
+| `session.archived` | A session is archived |
+| `photo.approved` | A photo submission is approved |
+| `photo.rejected` | A photo submission is rejected |
+| `changeset.generated` | A changeset is generated from a session |
+| `changeset.applied` | A changeset is applied to a Master List |
+| `changeset.rolled_back` | A changeset is rolled back |
+| `person.created` | A person is added to a Master List or session |
+| `person.erased` | A person's data is permanently erased (GDPR) |
+| `pass.generated` | A wallet pass is created |
+| `pass.revoked` | A wallet pass is revoked |
+| `pass.verified` | A wallet pass QR code is scanned for verification |
+
+## Exporting audit logs
+
+Click **Export to CSV** to download the filtered log entries as a spreadsheet. This is useful for compliance reporting or sharing with auditors.
+
+The export includes all columns: date, user, action, entity type, entity name, and details.
+
+## Who can see audit logs
+
+| Role | Access |
+|------|--------|
+| **Organisation Admin** | Full access to all audit logs |
+| **Coordinator** | Can view audit logs |
+| **Capturer** | No access |
+
+<Info>
+Audit logs are immutable — they cannot be edited or deleted, even by Organisation Admins. This ensures a trustworthy record for compliance purposes.
+</Info>
+
+## What's next?
+
+<Columns cols={2}>
+  <Card title="Person Erasure" icon="user-minus" href="/admin-guide/person-erasure">
+    Learn how to permanently erase a person's data for GDPR compliance (logged in audit trail).
+  </Card>
+  <Card title="Organisation Settings" icon="gear" href="/admin-guide/organisation-settings">
+    Configure data retention, auto-archive, and coordinator permissions.
+  </Card>
+</Columns>

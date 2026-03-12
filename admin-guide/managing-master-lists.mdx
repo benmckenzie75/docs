@@ -1,0 +1,155 @@
+---
+title: "Managing Master Lists"
+description: "Create and manage your organisation's central roster of people — the foundation for sessions, exports, and ID cards."
+---
+
+A **Master List** is your organisation's central roster of people. It's the source of truth that persists across sessions — create it once, keep it updated, and reuse it for photo days, data collection, card printing, and digital wallet passes.
+
+## Creating a Master List
+
+1. Go to **Master Lists** in the sidebar
+2. Click **Create Master List**
+3. Choose how to populate your list:
+
+| Source | Best for |
+|--------|----------|
+| **CSV Import** | You have an existing spreadsheet of people |
+| **Directory Sync** | Your organisation uses Microsoft Entra ID |
+| **Manual Entry** | Starting from scratch or adding a few people |
+
+4. Follow the wizard to configure your source and define your fields
+5. Give your list a name (e.g. "Students 2026", "Staff", "Contractors")
+6. Click **Create**
+
+<Tip>
+You can have multiple Master Lists for different groups — for example, one for students and another for staff. Each list has its own field schema and can be linked to different sessions.
+</Tip>
+
+## Defining your schema
+
+Every Master List has a **schema** — the set of fields that define what data you store for each person. You configure this when creating the list, and can add or edit fields later.
+
+### Field types
+
+| Type | Use for | Example |
+|------|---------|---------|
+| **Text** | Names, IDs, departments | "Emma Wilson", "Engineering" |
+| **Number** | Numeric values | Year level, age |
+| **Email** | Email addresses (validated format) | emma@school.edu.au |
+| **Dropdown** | Fixed set of options | House: "Blue", "Red", "Green" |
+| **Date** | Date values | Date of birth, start date |
+
+### Adding and editing fields
+
+From the **Schema** tab on your Master List:
+
+1. Click **Add Field** to create a new field
+2. Enter the field key (internal name), display label, and type
+3. Set whether the field is required
+4. For dropdown fields, define the available options
+5. Click **Save**
+
+You can edit a field's label, type, required status, and options at any time. Field keys cannot be changed after creation — this protects data integrity.
+
+## The UID field
+
+Every Master List must have exactly one **UID field** — a unique identifier for each person. This is the field that links people across sessions, imports, and sync operations.
+
+**Good UIDs:** Employee number, student ID, email address, staff code
+
+**Poor UIDs:** Full name (duplicates), phone number (changes frequently)
+
+<Warning>
+The UID field is set when you create a Master List and **cannot be changed** once people exist in the list. Choose carefully — it's the foundation of how CaptrID tracks and matches people.
+</Warning>
+
+## Adding people
+
+### Manually
+
+1. Open your Master List
+2. Click **Add Person**
+3. Fill in the required fields (including the UID)
+4. Click **Save**
+
+### From CSV
+
+The fastest way to populate a list. See [Importing a CSV Roster](/admin-guide/importing-csv) for detailed instructions.
+
+Key points:
+- Existing UIDs are **updated** (not duplicated) on re-import
+- New UIDs create new people
+- Validation errors are flagged and skipped
+
+### From directory sync
+
+If your organisation uses Microsoft Entra ID, you can sync people automatically. See [Directory Sync](/admin-guide/directory-sync) for setup instructions.
+
+## Editing people
+
+1. Open your Master List and go to the **People** tab
+2. Click on a person's row to view their details
+3. Edit any field values
+4. Click **Save**
+
+<Info>
+People synced from a directory (e.g. Entra ID) have their directory-managed fields locked. You can still edit fields that aren't mapped to the directory, and approved photos can still flow back from sessions.
+</Info>
+
+## Deactivating and reactivating people
+
+Rather than deleting people permanently, CaptrID uses **soft deletion** — deactivating a person hides them from default views while preserving their data.
+
+**To deactivate:**
+1. Select the person (or multiple people using checkboxes)
+2. Click **Deactivate**
+3. The person is hidden from the active list but their data is preserved
+
+**To reactivate:**
+1. Use the status filter to show **Inactive** people
+2. Select the person
+3. Click **Reactivate**
+
+Deactivated people don't count towards your plan's people limit.
+
+## Searching and filtering
+
+The **People** tab includes:
+
+- **Search** — Find people by name, UID, or any field value
+- **Status filter** — Show Active, Inactive, or All people
+- **Sort** — Click any column header to sort by that field
+- **Pagination** — Navigate through large lists (50 people per page)
+
+## Archiving a Master List
+
+If you no longer need a Master List but want to keep the data:
+
+1. Go to your Master List's settings
+2. Click **Archive**
+3. The list moves to the archived section
+
+Archived lists are hidden from the sidebar but can be restored at any time. They don't count towards your plan's Master List limit.
+
+<Info>
+You cannot archive a Master List if active sessions are using it. Archive or close those sessions first.
+</Info>
+
+## Using Master Lists with sessions
+
+When you [create a session](/admin-guide/creating-a-session), you can populate the roster from a Master List. CaptrID takes a **snapshot** — a point-in-time copy of the people. Changes in the session don't affect the Master List until you explicitly [sync them back](/admin-guide/saving-changes-to-master-list).
+
+This means you can safely edit data, capture photos, and approve submissions in a session without worrying about accidentally changing your source of truth.
+
+## Cross-list duplicates
+
+If the same UID appears in multiple Master Lists, CaptrID flags it with a warning badge. This helps you spot cases where the same person exists in more than one list — for example, a staff member who also appears in a contractors list.
+
+You can view duplicates from the **Duplicates** tab on any affected Master List.
+
+## Tips
+
+- **One list per population** — Create separate lists for students, staff, and contractors rather than mixing them
+- **Keep UIDs consistent** — Use the same format everywhere (e.g. always "STU001", not sometimes "stu001")
+- **Archive old lists** — At the end of a school year or project, archive the list rather than deleting it
+- **Start with CSV** — Even if you plan to use directory sync later, importing a CSV is the fastest way to get started

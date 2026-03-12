@@ -1,0 +1,219 @@
+---
+title: "Digital ID Cards (Google Wallet)"
+description: "Issue digital ID cards via Google Wallet — design a pass template, generate passes for your people, and distribute them by email."
+---
+
+Digital Cards let you issue identity credentials directly to people's phones via **Google Wallet**. No app to install, no account to create — recipients simply tap a link to add their ID to their wallet.
+
+<Info>
+Digital Cards require a **Pro** or **Business** plan. Pro plans include 1 wallet pass template; Business plans include unlimited templates.
+</Info>
+
+## How it works
+
+1. **Design** a wallet pass template with your branding
+2. **Link** the template to a Master List
+3. **Generate** passes for your people
+4. **Distribute** passes via email
+5. **Manage** the lifecycle — revoke, regenerate, or expire passes as needed
+
+## Creating a template
+
+1. Go to **Digital Cards** in the sidebar
+2. Click **New Template**
+3. Fill in the basics:
+
+| Field | Description |
+|-------|-------------|
+| **Name** | A name for your reference (e.g. "Staff ID 2026") |
+| **Description** | Optional summary |
+| **Pass Type** | **Member Card** (standard credential) or **Photo ID** (compact, photo-focused) |
+| **Barcode Type** | QR (recommended), PDF417, Aztec, or Code128 |
+
+4. Configure the design (see below)
+5. Click **Save**
+
+## Configuring the design
+
+The template editor shows a **live preview** of how your pass will look in Google Wallet as you make changes.
+
+### Branding
+
+| Setting | What it controls |
+|---------|-----------------|
+| **Background Colour** | The card's base colour |
+| **Foreground Colour** | Text colour on the card |
+| **Label Colour** | Secondary text colour |
+| **Card Title** | Display title (e.g. "Staff ID", "Member Card") |
+
+### Logo and images
+
+You can upload three optional images:
+
+| Image | Purpose | Recommended size |
+|-------|---------|-----------------|
+| **Icon** | Small circular icon in the card header | 200×200 px PNG |
+| **Logo** | Branding in the hero section | Transparent PNG |
+| **Member Strip** | Full-width banner artwork | Wide PNG/JPG |
+
+### Hero section layout
+
+The hero section is the main visual area of the card. Choose a layout:
+
+- **Photo Centred** — person's photo prominently displayed
+- **Photo Left / Photo Right** — two-column layout with photo and logo
+- **Member Strip** — full-width branded artwork
+- **Colour Only** — gradient background with logo overlay
+
+### Display fields
+
+Add up to **four extra fields** that appear on the card face. Each field has:
+
+| Property | Options |
+|----------|---------|
+| **Label** | Display name (e.g. "Employee ID", "Department") |
+| **Source** | **UID** (person's unique identifier), **Field** (from master list), or **Fixed Value** (same for all passes) |
+
+### Barcode
+
+- **Verification mode** — QR code contains a signed verification URL (recommended)
+- **Custom field mode** — QR code displays a specific master list field value
+
+### Validity
+
+| Mode | Behaviour |
+|------|-----------|
+| **None** | Passes never expire |
+| **Rolling** | Expires N days after generation |
+| **Fixed date** | All passes expire on a specific date |
+
+## Linking to a Master List
+
+Link your template to a Master List to enable field-based previews and email distribution.
+
+1. In the template editor, select a **Master List** from the dropdown
+2. The preview updates with real sample data from your list
+3. Field dropdowns populate with your Master List's schema
+
+**Why link?**
+- Live preview shows real names, UIDs, and field data
+- Enables email distribution (system looks up email addresses from your list)
+- Prevents "field not found" errors during generation
+
+## Generating passes
+
+Once your template is ready, generate passes for your people:
+
+1. Open your Master List and go to the **Digital Cards** tab
+2. Select a template from the dropdown
+3. Select the people you want to generate passes for (or use **Select All**)
+4. Click **Generate Wallet Passes**
+5. Review the confirmation dialog — it shows the template name, person count, and any field warnings
+6. Click **Generate**
+
+Passes are queued and generated in the background. You can continue working while they process. The status updates automatically:
+
+- **Pending** → generation in progress
+- **Generated** → ready to distribute
+
+<Tip>
+You can also generate passes from a session's **Digital Cards** tab — useful when you want to issue passes based on session data rather than master list data.
+</Tip>
+
+## Distributing passes
+
+After generation, distribute passes to recipients via email:
+
+1. Select passes with status **Generated** or **Active**
+2. Click **Send Emails**
+3. Confirm the count of recipients
+4. Each person receives an email with an **"Add to Google Wallet"** button
+
+### Email configuration
+
+On your template, configure delivery settings:
+
+| Setting | Purpose |
+|---------|---------|
+| **Email Field Key** | Which master list field contains the recipient's email address |
+| **Email Subject** | Custom subject line (optional) |
+| **Email Message** | Custom message included in the email body (optional) |
+
+### Delivery tracking
+
+Each pass tracks its delivery status:
+
+| Status | Meaning |
+|--------|---------|
+| **Sent** | Email accepted by the mail server |
+| **Failed** | Email delivery failed (check the error) |
+| **Skipped** | No email address found for this person |
+
+## Pass statuses
+
+| Status | Meaning | Available actions |
+|--------|---------|-------------------|
+| **No Pass** | Never generated | Generate |
+| **Generated** | Ready to send | Send Email, Revoke |
+| **Distributed** | Email sent | Send Again, Revoke |
+| **Active** | Pass in use | Send Email, Revoke |
+| **Outdated** | Person data changed since generation | Regenerate, Revoke |
+| **Revoked** | Admin revoked the pass | Reinstate |
+| **Expired** | Validity period ended | Regenerate |
+
+## Revoking passes
+
+When someone leaves your organisation or no longer needs their credential:
+
+1. Select their pass (or multiple passes)
+2. Click **Revoke**
+3. Confirm the action
+
+Revoked passes move to the "Expired Passes" section in the recipient's Google Wallet. You can **reinstate** a revoked pass if needed.
+
+## Updating outdated passes
+
+When a person's data changes (name, department, photo), their pass becomes **outdated** — the card still shows the old information.
+
+**To update individual passes:**
+1. Select the outdated passes
+2. Click **Regenerate**
+
+**To update all passes after a template change:**
+1. Save your template changes
+2. An amber banner appears: *"N active passes use this template. Design changes won't appear until passes are regenerated."*
+3. Click **Regenerate All**
+
+<Info>
+Regeneration creates a new pass. Recipients who previously added the pass to their wallet will need to add the new one. The old pass remains until they remove it manually.
+</Info>
+
+## QR verification
+
+Each pass includes a QR code that links to a verification page. When scanned, the page displays:
+
+- Person's name and UID
+- Organisation name
+- Pass status (active, revoked, expired)
+- Photo (if included)
+
+This allows anyone with a phone camera to verify a credential — no special hardware or app required.
+
+## Plans and limits
+
+| Plan | Templates | Passes per template |
+|------|-----------|-------------------|
+| **Starter** | Not available | — |
+| **Pro** | 1 | Unlimited |
+| **Business** | Unlimited | Unlimited |
+| **Enterprise** | Unlimited | Unlimited |
+
+If you've reached your template limit, you'll see an upgrade prompt when trying to create a new template.
+
+## Tips
+
+- **Start with a small group** — Generate and distribute passes for 5-10 people first to verify the design and email flow
+- **Use verification mode** — The signed QR code is more secure than displaying a raw field value
+- **Set up email delivery** — Link your template to a master list with email addresses before generating passes
+- **Revoke promptly** — When someone leaves your organisation, revoke their pass to prevent misuse
+- **Watch for outdated passes** — After bulk data updates or template changes, regenerate active passes to keep them current

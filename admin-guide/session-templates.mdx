@@ -1,0 +1,84 @@
+---
+title: "Session Templates"
+description: "Save reusable session configurations so you can create consistent sessions quickly."
+---
+
+A **session template** saves your session setup — fields, roster mode, capture settings — so you can reuse it whenever you create a new session. Instead of configuring the same fields and options every time, select a template and you're ready to go.
+
+## What a template saves
+
+| Setting | Saved in template |
+|---------|:-----------------:|
+| Session type (photo or data) | Yes |
+| Field definitions (names, types, UID, visibility) | Yes |
+| Roster mode (locked, hybrid, manual) | Yes |
+| Filename template | Yes |
+| Aspect ratio | Yes |
+| Allow capturers to add people | Yes |
+| Data review mode (for data sessions) | Yes |
+| UID auto-prefix | Yes |
+
+Templates do **not** save: data retention policy, Master List link, assigned capturers, or card template links. These are configured per-session when you create it.
+
+## Creating a template
+
+### From scratch
+
+1. From the sidebar, click **Session Templates**
+2. Click **Create Template**
+3. The Session Wizard opens in template mode — configure your fields, roster mode, and capture settings
+4. Give the template a name and optional description
+5. Click **Save Template**
+
+### From an existing session
+
+If you've already set up a session and want to reuse its configuration:
+
+1. Open the session
+2. In the management section, click **Save as Template**
+3. The wizard opens pre-filled with that session's settings
+4. Give it a name and save
+
+<Tip>
+Saving a template from a session is the fastest way to standardise your workflow. Set up one session exactly how you want it, then save it as a template for future use.
+</Tip>
+
+## Using a template
+
+1. Create a new session (from **All Sessions** → **Create Session**)
+2. On the first step, choose **Use Template**
+3. Select your template from the dropdown (filtered by session type)
+4. All field definitions and settings are applied automatically
+5. Continue through the wizard to set your roster source, assign capturers, and configure any session-specific settings
+
+<Info>
+Selecting a template pre-fills the wizard but doesn't lock anything. You can still adjust fields or settings before creating the session.
+</Info>
+
+## Editing a template
+
+1. Go to **Session Templates**
+2. Click on the template you want to edit
+3. The wizard opens with the template's current settings
+4. Make your changes and save
+
+Editing a template does **not** affect sessions that were already created from it. Each session is independent once created.
+
+## Deleting a template
+
+1. Go to **Session Templates**
+2. Click the delete action on the template
+3. Confirm the deletion
+
+Deleting a template does not affect any existing sessions — they keep their settings regardless.
+
+## What's next?
+
+<Columns cols={2}>
+  <Card title="Creating a Session" icon="plus" href="/admin-guide/creating-a-session">
+    Walk through the full Session Wizard step by step.
+  </Card>
+  <Card title="Data Collection Sessions" icon="keyboard" href="/admin-guide/data-sessions">
+    Learn about data-only sessions for collecting field data without photos.
+  </Card>
+</Columns>

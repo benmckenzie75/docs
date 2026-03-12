@@ -25,20 +25,27 @@
             "group": "Setting Up Your Organisation",
             "pages": [
               "admin-guide/inviting-team-members",
-              "admin-guide/plans-and-limits"
+              "admin-guide/organisation-settings",
+              "admin-guide/plans-and-limits",
+              "admin-guide/billing"
             ]
           },
           {
             "group": "Managing Rosters",
             "pages": [
-              "admin-guide/importing-csv"
+              "admin-guide/managing-master-lists",
+              "admin-guide/importing-csv",
+              "admin-guide/directory-sync"
             ]
           },
           {
             "group": "Running Sessions",
             "pages": [
               "admin-guide/creating-a-session",
+              "admin-guide/session-templates",
               "admin-guide/reviewing-photos",
+              "admin-guide/self-service-photo-upload",
+              "admin-guide/data-sessions",
               "admin-guide/exporting"
             ]
           },
@@ -49,20 +56,34 @@
             ]
           },
           {
-            "group": "ID Card Printing",
+            "group": "ID Cards & Credentials",
             "pages": [
-              "admin-guide/creating-card-templates"
+              "admin-guide/creating-card-templates",
+              "admin-guide/printing-id-cards",
+              "admin-guide/digital-cards"
+            ]
+          },
+          {
+            "group": "Compliance & Data",
+            "pages": [
+              "admin-guide/audit-logs",
+              "admin-guide/person-erasure"
             ]
           },
           {
             "group": "Capturer Guide",
             "pages": [
-              "capturer-guide/capturing-photos"
+              "capturer-guide/capturing-photos",
+              "capturer-guide/data-entry"
             ]
           },
           {
-            "group": "Support",
+            "group": "More",
             "pages": [
+              "admin-guide/dashboard",
+              "admin-guide/analytics",
+              "admin-guide/managing-your-account",
+              "admin-guide/keyboard-shortcuts",
               "support"
             ]
           }
