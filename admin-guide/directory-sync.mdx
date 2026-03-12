@@ -40,6 +40,10 @@ Ask your IT administrator to create the app registration and grant the required 
 
 Your credentials are stored securely and encrypted. You can test, edit, or remove connections at any time.
 
+<Frame caption="The Add Directory Connection form with fields for Tenant ID, Client ID, Client Secret, and a Test Connection button">
+  <img src="/images/admin-guide/directory-connection-form.png" alt="Directory connection setup form with credential fields and Test Connection button" />
+</Frame>
+
 ## Step 2: Configure sync on a Master List
 
 You can configure directory sync when creating a new Master List or on an existing one:
@@ -90,6 +94,10 @@ This is where you tell CaptrID which directory fields should populate which Mast
 - Lets you create new Master List fields on the fly for unmapped directory fields
 - Requires you to select a **UID field** — the directory field that uniquely identifies each person
 
+<Frame caption="The field mapping wizard showing directory fields mapped to Master List fields with sample data preview">
+  <img src="/images/admin-guide/directory-field-mapping.png" alt="Field mapping wizard with directory fields on the left mapped to Master List fields on the right, showing sample values" />
+</Frame>
+
 <Warning>
 Choose your UID field carefully — it should be a stable, unique identifier like `employeeId` or `mail`. This field is used to match people on every subsequent sync. If someone's UID changes in the directory, they'll appear as a new person in CaptrID.
 </Warning>
@@ -120,6 +128,10 @@ After the first sync, you have two options:
 ## Sync results
 
 After each sync, the **Sync** tab shows:
+
+<Frame caption="Sync results summary showing records created, updated, deactivated, and unchanged with a sync history log">
+  <img src="/images/admin-guide/directory-sync-results.png" alt="Sync results panel showing counts of created, updated, deactivated, and unchanged records with timestamps" />
+</Frame>
 
 - **Status** — Connected, with last sync timestamp
 - **Results** — Number of people created, updated, deactivated, and unchanged
