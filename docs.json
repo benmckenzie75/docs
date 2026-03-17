@@ -106,7 +106,7 @@
     "primary": {
       "type": "button",
       "label": "Open CaptrID",
-      "href": "https://captrid-admin.pages.dev"
+      "href": "https://app.captrid.com"
     }
   },
   "footer": {
