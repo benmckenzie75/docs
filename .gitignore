@@ -1,0 +1,12 @@
+# ShareX raw captures (unorganized)
+images/Screenshots/
+images/Logs/
+images/History.db
+images/ImageEffects/
+
+# Demo data (local only)
+demo-data/
+
+# OS files
+.DS_Store
+Thumbs.db
