@@ -30,18 +30,22 @@ A **Master List** is your organisation's central roster — create it once and r
   <img src="/images/getting-started/sidebar-master-lists.png" alt="Sidebar with Master Lists highlighted" />
 </Frame>
 
-2. Click **Create Master List**
-3. Enter a name (e.g. "Staff 2026" or "Students Term 1")
-4. Define your fields — at minimum you need:
-   - A **UID field** (unique identifier like Student ID, Employee Number, or Email)
-   - Name fields (First Name, Last Name)
-5. Click **Create**
+2. Click **Create Master List** — this opens the creation wizard
+3. **Choose your source** — select how you want to populate the list:
+   - **CSV Import** — upload a spreadsheet with your people data
+   - **Directory Integration** — sync from Microsoft Entra ID (if configured)
+   - **Manual Entry** — start with an empty list and add people yourself
+4. **Configure your source** (skipped for Manual Entry):
+   - For CSV: select your file, choose which column is the **UID** (unique identifier), and select which columns to import
+   - For Directory: select your connection and optionally choose a group to sync
+5. **Enter details** — give your list a name (e.g. "Staff 2026" or "Students Term 1") and an optional description
+6. Click **Create List**
 
-<Frame caption="The Create Master List dialog with fields configured">
-  <img src="/images/getting-started/create-master-list-dialog.png" alt="Create Master List dialog with name and fields filled in" />
+<Frame caption="The Create Master List wizard">
+  <img src="/images/getting-started/create-master-list-dialog.png" alt="Create Master List wizard with configuration options" />
 </Frame>
 
-6. Add people via **CSV import**, **manual entry**, or **directory sync** (Pro plans and above)
+CaptrID automatically creates your field schema from the CSV column headers or directory attributes. You can edit the schema later from the Master List detail screen.
 
 <Frame caption="A Master List populated with people after import">
   <img src="/images/getting-started/master-list-with-people.png" alt="Master List detail screen with people showing in a table" />
