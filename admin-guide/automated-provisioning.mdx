@@ -1,0 +1,298 @@
+---
+title: "Automated User Provisioning (SCIM)"
+description: "Connect your identity provider to automatically create, update, and deactivate people in a Master List — no manual imports, no data drift."
+---
+
+Connect your identity provider (IdP) to CaptrID and never manually import a roster again. When someone joins your organisation, changes department, or leaves, CaptrID updates automatically within seconds.
+
+Automated User Provisioning uses the **SCIM 2.0** standard (RFC 7643/7644), which means it works with any compliant identity provider — including Okta, Microsoft Entra ID, PingOne, OneLogin, JumpCloud, and more.
+
+<Info>
+Automated User Provisioning requires a **Business** or **Enterprise** plan. For Microsoft-only environments, [Directory Sync (Entra ID)](/admin-guide/directory-sync) is available on Pro plans.
+</Info>
+
+## Before you start
+
+You'll need:
+
+| Requirement | Detail |
+|-------------|--------|
+| **Business or Enterprise plan** | Automated provisioning is a Business+ feature |
+| **Identity provider with SCIM support** | Okta, Microsoft Entra ID, PingOne, OneLogin, JumpCloud, or any SCIM 2.0 compliant provider |
+| **Admin access to your IdP** | You'll need to create a SCIM application and paste in credentials |
+| **A Master List** | The list where provisioned people will appear |
+
+### Supported identity providers
+
+| Provider | Status | Notes |
+|----------|--------|-------|
+| **Okta** | Fully tested | SWA application with SCIM provisioning enabled |
+| **Microsoft Entra ID** | Compatible | Requires Entra P1 or P2 licence for SCIM provisioning |
+| **PingOne** | Compatible | Standard SCIM 2.0 connector |
+| **OneLogin** | Compatible | Standard SCIM 2.0 connector |
+| **JumpCloud** | Compatible | Requires paid Identity Management feature |
+
+<Tip>
+Any SCIM 2.0 compliant provider will work — you're not limited to the list above. If your provider supports outbound SCIM provisioning, it can connect to CaptrID.
+</Tip>
+
+### SCIM vs Directory Sync — which should I use?
+
+| | Directory Sync (Entra ID) | Automated Provisioning (SCIM) |
+|---|--------------------------|-------------------------------|
+| **Direction** | CaptrID pulls from Microsoft | Your IdP pushes to CaptrID |
+| **Providers** | Microsoft Entra ID only | Any SCIM 2.0 provider |
+| **Timing** | Manual or scheduled sync | Real-time (seconds after IdP change) |
+| **Plan** | Pro+ | Business+ |
+| **Best for** | Microsoft-only environments | Multi-vendor IdPs, real-time needs |
+
+<Warning>
+You can't use both Entra Directory Sync and SCIM on the same Master List — they're mutually exclusive. Use one sync method per list.
+</Warning>
+
+## Step 1: Connect your Master List
+
+1. Open your Master List
+2. Go to the **Sync** tab
+3. You'll see two provider cards — click **Automated User Provisioning**
+4. In the connect dialog, choose a **Unique Identifier**:
+
+| Option | Example | Best for |
+|--------|---------|----------|
+| **Employee Number** | `EMP001` | Organisations with stable employee/student IDs |
+| **Username** | `jsmith` | When employee numbers aren't available |
+| **Email** | `jane@example.com` | Simple setups where email is the primary identifier |
+
+5. Click **Connect**
+
+CaptrID automatically creates 9 default schema fields on your Master List: First Name, Last Name, Email, Display Name, Employee Number, Primary Email, Phone, Job Title, and Department.
+
+<Frame caption="The connect dialog showing Unique Identifier selection with stability guidance for each option">
+  <img src="/images/admin-guide/scim-connect-dialog.png" alt="SCIM connect dialog with UID selection options: Employee Number, Username, and Email" />
+</Frame>
+
+<Warning>
+Choose your Unique Identifier carefully — it should be **stable and unique** across your organisation. This field is used as the visible ID for each person in your Master List. If you're unsure, Employee Number is usually the safest choice.
+</Warning>
+
+<Info>
+CaptrID also stores the IdP's internal identifier separately as a sync anchor. This means people are reliably matched even if their visible ID changes — but changing UID can still cause confusion, so pick a stable one.
+</Info>
+
+## Step 2: Generate a bearer token
+
+After connecting, the Sync tab shows your SCIM configuration. You need to generate a token for your IdP:
+
+1. In the **Bearer Tokens** section, click **Generate Token**
+2. Copy both values:
+   - **SCIM Base URL** — the endpoint URL your IdP will send requests to
+   - **Bearer Token** — the authentication credential
+
+<Frame caption="Token generation dialog showing SCIM Base URL and Bearer Token with copy buttons">
+  <img src="/images/admin-guide/scim-token-dialog.png" alt="Token generation dialog displaying the SCIM Base URL and a bearer token, each with a copy button" />
+</Frame>
+
+<Warning>
+The bearer token is shown **only once**. Copy it immediately and store it securely. If you lose it, you'll need to generate a new one and update your IdP configuration.
+</Warning>
+
+## Step 3: Configure your identity provider
+
+In your IdP's admin console, create a SCIM application and enter the URL and token from Step 2.
+
+The exact steps vary by provider, but the general pattern is:
+
+1. Create a new application (SCIM or custom connector type)
+2. Set the **SCIM Base URL** (sometimes called "SCIM connector URL" or "Tenant URL")
+3. Set the **Bearer Token** (sometimes called "Secret Token" or "API Token")
+4. Set authentication mode to **HTTP Header** (Bearer token)
+5. Assign users or groups to the application
+
+<Tip>
+See the [IdP-specific setup guides](#idp-setup-guides) below for detailed instructions for each provider.
+</Tip>
+
+## Step 4: Assign users
+
+In your IdP, assign individual users or groups to the SCIM application. Assigned users are provisioned to your CaptrID Master List automatically:
+
+- **New assignments** create people in the Master List
+- **Attribute changes** update the corresponding fields
+- **Unassignments or deactivations** deactivate the person in the Master List
+
+Changes typically propagate within seconds, though some providers batch updates on a schedule (e.g. Entra ID provisions every 40 minutes by default).
+
+## Managing field mappings
+
+CaptrID creates sensible default mappings, but you can customise which IdP attributes map to which Master List fields.
+
+1. In the **Sync** tab, click **Configure Mappings**
+2. The full-screen mapping editor shows fields grouped by category:
+   - **Name** — given name, family name, display name
+   - **Contact** — emails, phone numbers
+   - **Organisation** — department, job title, employee number
+   - **Account** — username, active status
+3. Toggle mappings on or off, or change which Master List field each attribute maps to
+4. Click **Save**
+
+<Frame caption="The full-screen field mapping editor showing IdP attributes grouped by category with toggle switches">
+  <img src="/images/admin-guide/scim-field-mappings.png" alt="SCIM field mapping editor with categorised attributes and toggle switches for each mapping" />
+</Frame>
+
+<Info>
+You can map up to **27 IdP attributes** to Master List fields, including name components, multiple email addresses, phone numbers, addresses, organisation details, and custom extension attributes.
+</Info>
+
+## Viewing the provisioning log
+
+Every create, update, and deactivate operation from your IdP is logged. To view the log:
+
+1. Open the Master List → **Sync** tab
+2. Scroll to the **Provisioning Log** section
+
+Each entry shows the operation type, the affected person, the HTTP method, and a timestamp.
+
+<Frame caption="Provisioning log showing recent create and update operations from the identity provider">
+  <img src="/images/admin-guide/scim-provisioning-log.png" alt="Provisioning log table with columns for operation, person, method, path, and timestamp" />
+</Frame>
+
+## Managing tokens
+
+Each Master List has its own bearer tokens. You can have multiple active tokens per list (useful for rotating credentials without downtime).
+
+### Generating additional tokens
+
+Click **Generate Token** in the Bearer Tokens section. Each new token works independently alongside existing ones.
+
+### Revoking a token
+
+1. Find the token in the Bearer Tokens list (identified by its prefix, e.g. `sct_a1b2...`)
+2. Click **Revoke**
+3. Confirm the action
+
+The token stops working immediately. Your IdP will receive `401 Unauthorised` errors until you update it with a new token.
+
+### Syncing different groups to different lists
+
+To sync different IdP groups to different Master Lists (e.g. Staff and Students):
+
+1. Create a separate Master List for each group
+2. Connect SCIM on each list and generate a token for each
+3. In your IdP, create a separate SCIM application for each list
+4. Assign the relevant group to each application
+
+Each application uses its own SCIM Base URL and token, keeping the groups cleanly separated.
+
+## Disconnecting
+
+To stop SCIM provisioning on a Master List:
+
+1. Open the Master List → **Sync** tab
+2. Click **Disconnect**
+3. Confirm the action
+
+**What happens:**
+
+- All active tokens for this list are revoked
+- Your IdP will receive `401` errors on its next provisioning attempt
+- All existing people remain in the Master List — nothing is deleted
+- Previously synced fields become editable
+- You can reconnect and set up provisioning again later
+
+## IdP setup guides
+
+### Okta
+
+1. In Okta Admin Console, go to **Applications** → **Create App Integration**
+2. Select **SWA - Secure Web Authentication**
+3. Give the app a name (e.g. "CaptrID Staff Roster")
+4. After creating the app, go to the **General** tab → **App Settings** → **Edit**
+5. Under **Provisioning**, select **SCIM**
+6. Go to the **Provisioning** tab → **Integration** → **Edit**
+7. Enter:
+   - **SCIM connector base URL** — paste the SCIM Base URL from CaptrID
+   - **Unique identifier field for users** — `userName`
+   - **Authentication Mode** — HTTP Header
+   - **Authorization** — paste the Bearer Token from CaptrID
+8. Click **Test Connector Configuration** — verify it connects successfully
+9. Under **Provisioning** → **To App**, enable:
+   - **Create Users**
+   - **Update User Attributes**
+   - **Deactivate Users**
+10. Go to the **Assignments** tab and assign users or groups
+
+### Microsoft Entra ID
+
+<Info>
+Entra ID SCIM provisioning requires a **Microsoft Entra P1 or P2** licence (included in Microsoft 365 E3/E5). If you only have basic Entra, use [Directory Sync](/admin-guide/directory-sync) instead — it works on all Entra tiers.
+</Info>
+
+1. In the Azure portal, go to **Microsoft Entra ID** → **Enterprise Applications**
+2. Click **New application** → **Create your own application**
+3. Name it (e.g. "CaptrID Provisioning") and select **Integrate any other application not found in the gallery**
+4. Go to **Provisioning** → **Get started**
+5. Set **Provisioning Mode** to **Automatic**
+6. Under **Admin Credentials**, enter:
+   - **Tenant URL** — paste the SCIM Base URL from CaptrID
+   - **Secret Token** — paste the Bearer Token from CaptrID
+7. Click **Test Connection** — verify it connects successfully
+8. Click **Save**
+9. Under **Mappings**, review the attribute mappings (Entra's defaults usually work well)
+10. Go to **Users and groups** and assign users or groups
+11. Set **Provisioning Status** to **On** and click **Save**
+
+<Tip>
+Entra ID provisions changes approximately every 40 minutes. For faster initial sync, click **Provision on demand** for specific users, or use **Restart provisioning** to trigger a new cycle.
+</Tip>
+
+### JumpCloud
+
+1. In the JumpCloud Admin Console, go to **SSO Applications** → **Add New Application**
+2. Search for "Custom SCIM" or create a **Custom Application**
+3. Under **Identity Management** → **Configuration**:
+   - **Base URL** — paste the SCIM Base URL from CaptrID
+   - **Token Key** — paste the Bearer Token from CaptrID
+4. Click **Test Connection**
+5. Under **Identity Management**, enable user provisioning
+6. Go to the **User Groups** tab and assign groups
+
+<Info>
+JumpCloud requires a paid plan with Identity Management enabled for SCIM provisioning.
+</Info>
+
+## Frequently asked questions
+
+**Can I use both Entra Directory Sync and SCIM on the same list?**
+
+No — they're mutually exclusive. One sync provider per Master List. Use Entra Directory Sync for pulling from Microsoft, or SCIM for having any IdP push to you.
+
+**Does SCIM sync photos?**
+
+No — identity providers don't send photos via SCIM. Photos flow into CaptrID through [sessions](/admin-guide/creating-a-session), [self-upload links](/admin-guide/self-service-photo-upload), or admin upload.
+
+**What fields are synced by default?**
+
+First Name, Last Name, Email, Display Name, Employee Number, Primary Email, Phone, Job Title, and Department. You can add, remove, or remap fields via the Configure Mappings editor.
+
+**What happens if someone's data changes in the IdP?**
+
+The change is pushed to CaptrID automatically. The corresponding Master List fields are updated. Local-only fields (not mapped to the IdP) are never affected.
+
+**What happens if someone is removed or deactivated in the IdP?**
+
+They're **deactivated** in your Master List — not deleted. You can view deactivated people by switching the status filter to "Inactive" and reactivate them if needed.
+
+**Can I edit synced people manually?**
+
+Fields mapped to the IdP are locked to prevent manual edits being overwritten. You can still edit unmapped fields, and use synced people in sessions where edits are made on the session copy.
+
+## Troubleshooting
+
+| Issue | Cause | Solution |
+|-------|-------|----------|
+| "401 Unauthorised" from IdP | Invalid or revoked bearer token | Generate a new token in CaptrID and update your IdP configuration |
+| People not appearing after assignment | IdP hasn't pushed yet, or provisioning isn't enabled | Check provisioning is enabled in the IdP app. Some providers batch changes (Entra: ~40 min). Try "Provision on demand" if available. |
+| Duplicate people in the list | UID changed between provisions, or token pointed at wrong list | Verify the SCIM Base URL matches the correct Master List. Check the UID field hasn't changed in the IdP. |
+| Fields showing unexpected values | Field mapping mismatch | Open **Configure Mappings** and verify the IdP attributes are mapped to the correct Master List fields |
+| "Connection failed" during IdP test | Network or URL issue | Verify the SCIM Base URL is correct and includes the full path. Check your IdP can reach the internet. |
+| Changes not propagating | IdP batching or provisioning paused | Check IdP provisioning status. Entra ID batches every ~40 minutes. Okta provisions near-instantly. |

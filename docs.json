@@ -35,7 +35,8 @@
             "pages": [
               "admin-guide/managing-master-lists",
               "admin-guide/importing-csv",
-              "admin-guide/directory-sync"
+              "admin-guide/directory-sync",
+              "admin-guide/automated-provisioning"
             ]
           },
           {
