@@ -12,6 +12,7 @@ When a handover doc is written, the docs update should be part of the same workf
 | `admin-guide/digital-cards.mdx` | Wallet pass edge functions, `.claude/rules/module-wallet-passes.md` | Unknown |
 | `admin-guide/self-service-photo-upload.mdx` | Self-upload edge functions | Unknown |
 | `admin-guide/plans-and-limits.mdx` | `admin/lib/pricing_config.dart`, `docs/strategy/PRICING_AND_GTM.md` | 2026-04-02 |
+| `admin-guide/bulk-photo-upload.mdx` | Bulk upload service, `docs/handovers/BULK_PHOTO_UPLOAD_HANDOVER.md` | 2026-04-03 |
 | `admin-guide/reviewing-photos.mdx` | Submissions service, approval RPC | Unknown |
 | `admin-guide/saving-changes-to-master-list.mdx` | Changeset service | Unknown |
 | `admin-guide/creating-a-session.mdx` | Sessions service, session wizard | Unknown |

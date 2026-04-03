@@ -237,6 +237,18 @@ These are **mobile screenshots** — use device frames.
 | 77 | `admin-guide/person-erasure-search-results.png` | Search results grouped by UID with expandable details | Searching for a person | Show expanded card with per-source field data |
 | 78 | `admin-guide/person-erasure-preview-dialog.png` | Dry-run preview dialog showing deletion counts | Previewing erasure | Show the counts (master list records, session records, submissions) |
 
+### Admin Guide > Bulk Photo Upload (`admin-guide/bulk-photo-upload.mdx`)
+
+| # | Filename | What to capture | Section | Notes |
+|---|----------|----------------|---------|-------|
+| 90 | `admin-guide/bulk-upload-source-selector.png` | Setup stage with source selector chips (Local Files, OneDrive, Google Drive) | Choose a source | Show all three source options with Local Files selected |
+| 91 | `admin-guide/bulk-upload-onedrive-browser.png` | OneDrive folder browser with grid view and photo thumbnails | Select photos (OneDrive) | Show the OAuth-authenticated folder browser with a folder of student photos |
+| 92 | `admin-guide/bulk-upload-google-picker.png` | Google Drive Picker UI with file selection | Select photos (Google Drive) | Show the standard Google Picker with images selected |
+| 93 | `admin-guide/bulk-upload-review-matches.png` | Review stage with Matched (green), Needs Review (amber), Unmatched (red) tabs | Review matches | Show the three tabs with count badges and photo previews |
+| 94 | `admin-guide/bulk-upload-manual-assign.png` | Manual assign search dialog for an unmatched photo | Review matches | Show the search field with person results and the unmatched photo thumbnail |
+| 95 | `admin-guide/bulk-upload-progress.png` | Upload progress with per-file status indicators | Upload | Show the progress bar and individual file statuses (uploading, complete, failed) |
+| 96 | `admin-guide/bulk-upload-complete.png` | Complete stage with auto-approve success summary | Upload | Show counts: uploaded, matched, auto-approved, skipped |
+
 ### Admin Guide > Session Templates (`admin-guide/session-templates.mdx`)
 
 | # | Filename | What to capture | Section | Notes |
@@ -318,8 +330,9 @@ Capture in this order to minimise setup/navigation:
 18. **Directory Sync** screens (connection form, field mapping, sync results)
 19. **Automated Provisioning (SCIM)** screens (connect dialog, token dialog, field mappings, provisioning log)
 20. **Self-Service Upload** screens (session config, landing page, invitation statuses)
-21. **Feedback** dialog
-22. **Mobile app** screens (home, roster, camera, review, crop, queue, activity, data session, data entry form, revision notes)
+21. **Bulk Photo Upload** screens (source selector, OneDrive browser, Google Picker, review matches, manual assign, progress, complete)
+22. **Feedback** dialog
+23. **Mobile app** screens (home, roster, camera, review, crop, queue, activity, data session, data entry form, revision notes)
 
 ### Tools
 - **macOS**: CleanShot X (crop, device frames, scrolling capture)
