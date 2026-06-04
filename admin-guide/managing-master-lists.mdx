@@ -5,6 +5,21 @@ description: "Create and manage your organisation's central roster of people —
 
 A **Master List** is your organisation's central roster of people. It's the source of truth that persists across sessions — create it once, keep it updated, and reuse it for photo days, data collection, card printing, and digital wallet passes.
 
+## The Master List detail screen
+
+Opening a Master List gives you six tabs:
+
+| Tab | What it's for |
+|-----|---------------|
+| **People** | View, search, add, edit, and deactivate the people on the list |
+| **Digital Cards** | Generate and manage [wallet passes](/admin-guide/digital-cards) for this list |
+| **Sync** | Configure [Entra](/admin-guide/directory-sync) or [Airtable](/admin-guide/airtable-sync) sync (only when a source is connected) |
+| **Schema** | Define the fields stored for each person |
+| **Duplicates** | Review records flagged as potential duplicates |
+| **Settings** | List details, sync/changeset defaults, duplicate detection, data & privacy, and the danger zone |
+
+The header shows live counts — **Total**, **Active**, and **Synced** people.
+
 ## Creating a Master List
 
 <Frame caption="The Master List detail screen showing the People tab with field columns, search, and status filters">
@@ -18,7 +33,8 @@ A **Master List** is your organisation's central roster of people. It's the sour
 | Source | Best for |
 |--------|----------|
 | **CSV Import** | You have an existing spreadsheet of people |
-| **Directory Sync** | Your organisation uses Microsoft Entra ID |
+| **Directory Sync (Entra ID)** | Your organisation uses Microsoft Entra ID |
+| **Airtable** | Your roster lives in an Airtable base |
 | **Manual Entry** | Starting from scratch or adding a few people |
 
 4. Follow the wizard to configure your source and define your fields
@@ -93,9 +109,9 @@ Key points:
 - New UIDs create new people
 - Validation errors are flagged and skipped
 
-### From directory sync
+### From directory sync or Airtable
 
-If your organisation uses Microsoft Entra ID, you can sync people automatically. See [Directory Sync](/admin-guide/directory-sync) for setup instructions.
+You can sync people automatically from an external source and keep the list current — including photos. See [Directory Sync](/admin-guide/directory-sync) for Microsoft Entra ID, or [Airtable Sync](/admin-guide/airtable-sync) for an Airtable base.
 
 ## Editing people
 
@@ -133,19 +149,41 @@ The **People** tab includes:
 - **Sort** — Click any column header to sort by that field
 - **Pagination** — Navigate through large lists (50 people per page)
 
-## Archiving a Master List
+## List settings
 
-If you no longer need a Master List but want to keep the data:
+The **Settings** tab gathers everything about how the list behaves. Each section has its own **Edit** control.
 
-1. Go to your Master List's settings
-2. Click **Archive**
-3. The list moves to the archived section
+<Frame caption="The Settings tab showing Details, About, and Sessions & Changesets sections">
+  <img src="/images/admin-guide/master-list-settings-details.png" alt="Master List settings tab with Details, system-managed About info, and Sessions & Changesets defaults" />
+</Frame>
 
-Archived lists are hidden from the sidebar but can be restored at any time. They don't count towards your plan's Master List limit.
+| Section | What you control |
+|---------|------------------|
+| **Details** | The list's name and description |
+| **About** | System-managed info — data source (Manual, CSV, or directory sync), status, created and last-updated dates (read-only) |
+| **Sessions & Changesets** | **Allow New Records** (whether capturers can add people during sessions) and the **Session Edit Policy** (which fields flow back via changesets) |
+| **Duplicate Detection** | Enable detection, choose the **Match Field**, and toggle **Show Duplicate Badge** on cards |
+| **Data & Privacy** | **Retention Policy** (how long to keep data before auto-archival) and **Allow Data Export** |
+| **Danger Zone** | **Archive** or **Delete** the list |
+
+<Frame caption="The Settings tab showing Duplicate Detection, Data & Privacy, and the Danger Zone">
+  <img src="/images/admin-guide/master-list-settings-data.png" alt="Master List settings showing duplicate detection match field, data retention and export controls, and a danger zone with Archive and Delete buttons" />
+</Frame>
 
 <Info>
-You cannot archive a Master List if active sessions are using it. Archive or close those sessions first.
+**Organisation-wide** defaults (coordinator permissions, default session settings, org-level retention) live in [Organisation Settings](/admin-guide/organisation-settings). The Settings tab here is **per-list** and overrides those defaults for this list only.
 </Info>
+
+### Archiving and deleting
+
+From the **Danger Zone**:
+
+- **Archive** keeps the data but hides the list from the sidebar — restore it any time. Archived lists don't count towards your plan's Master List limit.
+- **Delete** permanently removes the list. Any [wallet passes](/admin-guide/digital-cards) issued from it are **revoked and voided first**.
+
+<Warning>
+You cannot archive or delete a Master List while active sessions are using it. Archive or close those sessions first.
+</Warning>
 
 ## Using Master Lists with sessions
 
@@ -153,11 +191,11 @@ When you [create a session](/admin-guide/creating-a-session), you can populate t
 
 This means you can safely edit data, capture photos, and approve submissions in a session without worrying about accidentally changing your source of truth.
 
-## Cross-list duplicates
+## Duplicates
 
-If the same UID appears in multiple Master Lists, CaptrID flags it with a warning badge. This helps you spot cases where the same person exists in more than one list — for example, a staff member who also appears in a contractors list.
+CaptrID flags potential duplicate records so you can spot the same person appearing more than once — for example, a staff member who's also in a contractors list.
 
-You can view duplicates from the **Duplicates** tab on any affected Master List.
+By default it matches on the **UID**, but you can change the **Match Field** under **Settings → Duplicate Detection** (and toggle whether a badge shows on cards). Review flagged records from the **Duplicates** tab on any affected Master List.
 
 ## Tips
 

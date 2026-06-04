@@ -15,7 +15,7 @@ Digital Cards require a **Pro** or **Business** plan. Pro plans include 1 wallet
 2. **Link** the template to a Master List
 3. **Generate** passes for your people
 4. **Distribute** passes via email
-5. **Manage** the lifecycle — revoke, regenerate, or expire passes as needed
+5. **Manage** the lifecycle — suspend, revoke, reinstate, regenerate, or expire passes as needed
 
 ## Creating a template
 
@@ -136,10 +136,15 @@ You can also generate passes from a session's **Digital Cards** tab — useful w
 
 After generation, distribute passes to recipients via email:
 
-1. Select passes with status **Generated** or **Active**
-2. Click **Send Emails**
-3. Confirm the count of recipients
-4. Each person receives an email with an **"Add to Google Wallet"** or **"Add to Apple Wallet"** button
+1. Select people, then choose an action from the toolbar:
+   - **Send Unsent** — emails only the people who haven't received their pass yet (the safe default — it won't re-email anyone)
+   - **Resend (incl. sent)** — re-emails everyone selected, including people who were already sent a pass
+2. Confirm the count of recipients
+3. Each person receives an email with an **"Add to Google Wallet"** or **"Add to Apple Wallet"** button
+
+<Tip>
+When you send, CaptrID **prefills the email field** from your template's configured email field, so you can see and confirm exactly which address each pass will go to before sending.
+</Tip>
 
 ### Email configuration
 
@@ -161,21 +166,60 @@ Each pass tracks its delivery status:
 | **Failed** | Email delivery failed (check the error) |
 | **Skipped** | No email address found for this person |
 
+## Working in bulk
+
+On a Master List's **Digital Cards** tab, click **Select** to choose multiple people at once. The toolbar then exposes every lifecycle action so you can act on a whole group in one go:
+
+<Frame caption="The Digital Cards tab in selection mode showing the bulk action toolbar and a wallet job generating passes">
+  <img src="/images/admin-guide/wallet-bulk-actions.png" alt="Digital Cards tab with people selected and a bulk toolbar offering Create Missing, Send Unsent, Resend, Regenerate Outdated, Revoke Issued, and Reinstate Revoked" />
+</Frame>
+
+| Action | What it does |
+|--------|--------------|
+| **Create Missing** | Generates passes for selected people who don't have one yet |
+| **Send Unsent** | Emails passes to people who haven't been sent one |
+| **Resend (incl. sent)** | Re-emails everyone selected, even if already sent |
+| **Regenerate Outdated** | Rebuilds passes whose person data has changed |
+| **Revoke Issued** | Revokes the active passes in the selection |
+| **Reinstate Revoked** | Brings revoked passes back |
+
+Bulk generation runs as a background **wallet job** — a progress pill ("Wallet job running") appears in the top bar and the affected rows show a **Generating** status until they finish.
+
+<Warning>
+Large bulk jobs are processed while you watch — keep the tab open until the job reports complete. If you close the browser mid-job, reopen the Digital Cards tab and re-run the action to finish any stragglers.
+</Warning>
+
 ## Pass statuses
 
 | Status | Meaning | Available actions |
 |--------|---------|-------------------|
-| **No Pass** | Never generated | Generate |
-| **Generated** | Ready to send | Send Email, Revoke |
-| **Distributed** | Email sent | Send Again, Revoke |
-| **Active** | Pass in use | Send Email, Revoke |
+| **No Pass** | Never generated | Create / Generate |
+| **Generated** | Ready to send | Send, Suspend, Revoke |
+| **Active** | Pass in use (delivered) | Resend, Suspend, Revoke |
+| **Suspended** | Temporarily on hold | Unsuspend, Revoke |
 | **Outdated** | Person data changed since generation | Regenerate, Revoke |
-| **Revoked** | Admin revoked the pass | Reinstate |
+| **Revoked** | Pass permanently cancelled | Reinstate |
 | **Expired** | Validity period ended | Regenerate |
 
-<Frame caption="The Digital Cards tab showing a list of passes with status badges, delivery status, and action buttons">
-  <img src="/images/admin-guide/wallet-passes-list.png" alt="List of wallet passes with status badges showing Generated, Active, Distributed, and Outdated states" />
+Each row also shows which wallets the pass was added to (Apple / Google icons) and an **Email sent** badge once it's been distributed.
+
+<Frame caption="The Digital Cards tab showing passes with Active, Suspended, Revoked, and No Pass status badges">
+  <img src="/images/admin-guide/wallet-passes-list.png" alt="List of wallet passes with status badges showing Active, Suspended, Revoked, and No Pass states alongside wallet platform icons" />
 </Frame>
+
+## Suspending passes
+
+A **suspend** puts a pass on hold without cancelling it — useful for a temporary situation like overdue fees or a lost-then-found card.
+
+1. Open the person's pass actions and choose **Suspend** (or select several and suspend in bulk)
+2. Optionally enter a **reason** (e.g. "Fees overdue")
+3. Confirm
+
+<Frame caption="The Suspend Pass dialog explaining that a suspended pass shows as suspended when scanned but can be unsuspended later">
+  <img src="/images/admin-guide/wallet-suspend-modal.png" alt="Suspend Pass dialog with an optional reason field and Cancel / Suspend buttons" />
+</Frame>
+
+A suspended pass **shows as suspended when its QR code is scanned**, but stays in the recipient's wallet and can be **unsuspended** at any time to restore it. Use suspend when the hold is temporary; use revoke when it's permanent.
 
 ## Revoking passes
 
@@ -185,7 +229,22 @@ When someone leaves your organisation or no longer needs their credential:
 2. Click **Revoke**
 3. Confirm the action
 
-Revoked passes are deactivated in the recipient's wallet. You can **reinstate** a revoked pass if needed.
+Revoked passes are cancelled in the recipient's wallet and show as **revoked** on the verification page. You can **reinstate** a revoked pass if the decision is reversed.
+
+### Passes are revoked automatically when data is removed
+
+To prevent a live credential outliving its record, CaptrID revokes and voids passes for you when the underlying person is removed:
+
+| Event | What happens to passes |
+|-------|------------------------|
+| A person is [erased](/admin-guide/person-erasure) (GDPR) | Their passes are **revoked and voided first**, then hard-deleted |
+| A Master List is deleted | Passes for everyone on that list are **revoked and voided** before the list is removed |
+
+This means a deleted person can never present a working wallet pass — the QR code resolves to a revoked credential.
+
+<Info>
+If you re-link a person to a new serial (for example, after re-issuing a card), CaptrID **resets the delivery state** so the pass can be sent fresh — it won't be incorrectly treated as "already delivered".
+</Info>
 
 ## Updating outdated passes
 
@@ -210,7 +269,7 @@ Each pass includes a QR code that links to a verification page. When scanned, th
 
 - Person's name and UID
 - Organisation name
-- Pass status (active, revoked, expired)
+- Pass status (active, suspended, revoked, expired)
 - Photo (if included)
 
 This allows anyone with a phone camera to verify a credential — no special hardware or app required.

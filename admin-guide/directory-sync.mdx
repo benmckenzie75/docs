@@ -3,11 +3,13 @@ title: "Directory Sync (Microsoft Entra ID)"
 description: "Sync your roster automatically from Microsoft Entra ID — keep your Master List up to date without manual imports."
 ---
 
-If your organisation uses **Microsoft Entra ID** (formerly Azure Active Directory), you can sync your people directly into a Master List. Changes in your directory — new starters, leavers, department changes — flow into CaptrID automatically when you run a sync.
+If your organisation uses **Microsoft Entra ID** (formerly Azure Active Directory), you can sync your people directly into a Master List. Changes in your directory — new starters, leavers, department changes, and **profile photos** — flow into CaptrID when you run a sync or on a schedule.
 
 <Info>
 Directory sync requires a **Pro** or **Business** plan. Pro plans support 1 sync provider; Business plans support multiple.
 </Info>
+
+Entra connections live under **Directory Integrations** alongside Airtable. If you keep your roster in Airtable instead, see [Airtable Sync](/admin-guide/airtable-sync).
 
 ## Before you start
 
@@ -26,8 +28,8 @@ Ask your IT administrator to create the app registration and grant the required 
 
 ## Step 1: Add a directory connection
 
-1. Go to **Organisation Settings** → **Directory Integrations**
-2. Click **Add Connection**
+1. Go to **Directory Integrations** in the sidebar (under **Data**)
+2. Click **Add Connection** and choose **Microsoft Entra ID** as the provider
 3. Enter:
    - **Connection Name** — a label for your reference (e.g. "School Entra")
    - **Tenant ID** — from your Entra app registration
@@ -38,10 +40,14 @@ Ask your IT administrator to create the app registration and grant the required 
    - If it fails, check your credentials and API permissions
 5. Click **Save**
 
-Your credentials are stored securely and encrypted. You can test, edit, or remove connections at any time.
+<Frame caption="The Add Directory Connection dialog with a provider selector and fields for Tenant ID, Client ID, and Client Secret">
+  <img src="/images/admin-guide/directory-connection-form.png" alt="Add Directory Connection dialog with Microsoft Entra ID selected as the provider and fields for Connection Name, Tenant ID, Client ID, and Client Secret plus Test Connection and Save buttons" />
+</Frame>
 
-<Frame caption="The Add Directory Connection form with fields for Tenant ID, Client ID, Client Secret, and a Test Connection button">
-  <img src="/images/admin-guide/directory-connection-form.png" alt="Directory connection setup form with credential fields and Test Connection button" />
+Your credentials are stored securely and encrypted. You can test, edit, or remove connections at any time. Entra and Airtable connections appear together in the **Your Connections** list.
+
+<Frame caption="The Directory Integrations screen listing a Microsoft Entra ID connection and an Airtable connection, both showing Connected">
+  <img src="/images/admin-guide/directory-connections-list.png" alt="Directory Integrations screen with two connections — Microsoft Entra ID and Airtable — each showing a Connected badge" />
 </Frame>
 
 ## Step 2: Configure sync on a Master List
@@ -62,14 +68,18 @@ You can configure directory sync when creating a new Master List or on an existi
 3. Click **Configure Sync**
 4. Follow the wizard steps below
 
-## Step 3: Select a group
+## Step 3: Set the scope
 
-Choose which people to sync:
+Choose which people to sync from your tenant:
 
-- **All users** — sync everyone in the directory
-- **Specific group** — sync only members of a particular security group (e.g. "Teaching Staff", "Year 7 Students")
+- **All users** — sync everyone in your Entra tenant
+- **Specific group** — sync only members of one security group (e.g. "Teaching Staff", "Year 7 Students")
 
-When you select a group, CaptrID shows the member count so you can verify you've picked the right one.
+When you choose **Specific group**, search for the group — CaptrID shows the member count next to each so you can verify you've picked the right one.
+
+<Frame caption="The Scope & Filters step with an All users / Specific group toggle and a searchable list of Entra security groups with member counts">
+  <img src="/images/admin-guide/directory-scope-filters.png" alt="Directory sync scope step showing All users versus Specific group options and a list of Entra groups with member counts" />
+</Frame>
 
 <Tip>
 Scoping to a group is recommended for most organisations. It keeps your Master List focused and syncs faster than pulling the entire directory.
@@ -89,10 +99,11 @@ This is where you tell CaptrID which directory fields should populate which Mast
 | `department` | → | **department** |
 
 **The wizard helps you:**
-- Auto-maps fields with matching names
-- Shows sample data from your directory so you can verify the mapping
-- Lets you create new Master List fields on the fly for unmapped directory fields
-- Requires you to select a **UID field** — the directory field that uniquely identifies each person
+- Suggests mappings for fields with matching names — accept them individually or **Apply all**
+- Groups source fields by category (**Identity**, **Contact**, **Organisation**, **Account**, **On-Premises**, **Extension Attributes**, **Custom**) with an **Unmapped only** filter to focus
+- Shows sample data from your directory so you can verify each mapping
+- Lets you create new Master List fields on the fly, or bulk **Import all fields** into your schema
+- Requires you to select a **UID field** — the directory field that uniquely identifies each person (a stable HR/SIS identifier like `employeeId` is the best choice)
 
 <Frame caption="The field mapping wizard showing directory fields mapped to Master List fields with sample data preview">
   <img src="/images/admin-guide/directory-field-mapping.png" alt="Field mapping wizard with directory fields on the left mapped to Master List fields on the right, showing sample values" />
@@ -107,35 +118,38 @@ Choose your UID field carefully — it should be a stable, unique identifier lik
 After saving your configuration:
 
 1. Go to the **Sync** tab on your Master List
-2. Click **Sync Now**
-3. Choose **Full Sync** for the first run
-4. Wait for the sync to complete (typically under a minute for most organisations)
-5. Review the results: people created, updated, and any errors
+2. Click **Sync Now** to run the first backfill
+3. Wait for the sync to complete (typically under a minute for most organisations)
+4. Review the results: people created, updated, photos imported, and any errors
 
-## Running subsequent syncs
+## Keeping the list up to date
 
-After the first sync, you have two options:
+After the first sync, you can keep your Master List current in two ways:
 
-| Sync type | Speed | What it does |
-|-----------|-------|-------------|
-| **Delta Sync** | Fast (seconds) | Fetches only changes since the last sync — new people, updates, and removals |
-| **Full Sync** | Slower (minutes) | Re-fetches the entire directory and reconciles all records |
+### Manual sync
 
-**Use delta sync** for regular updates — it's faster and handles most changes.
+Click **Sync Now** on the **Sync** tab whenever you want to pull the latest from Entra. Each run re-fetches the scoped users and reconciles all records — creating new people, updating changed data, and deactivating anyone who's left the group or directory.
 
-**Use full sync** when you suspect drift, after major directory changes (like a restructure), or if delta sync seems to be missing changes.
+### Scheduled sync
+
+Turn on a schedule so CaptrID syncs automatically on an interval — no need to remember to click **Sync Now**. Set or change the interval from the **Schedule** section of the **Sync** card.
+
+<Tip>
+A schedule is the best way to keep large rosters accurate. Set it to match how often your directory changes — daily is plenty for most organisations.
+</Tip>
 
 ## Sync results
 
 After each sync, the **Sync** tab shows:
 
-<Frame caption="Sync results summary showing records created, updated, deactivated, and unchanged with a sync history log">
-  <img src="/images/admin-guide/directory-sync-results.png" alt="Sync results panel showing counts of created, updated, deactivated, and unchanged records with timestamps" />
+<Frame caption="The Sync tab showing sync status, schedule, connection configuration, and a field mappings summary">
+  <img src="/images/admin-guide/master-list-sync-tab.png" alt="Master List sync tab showing sync status, schedule, configuration with connection details, and a field mappings summary" />
 </Frame>
 
-- **Status** — Connected, with last sync timestamp
-- **Results** — Number of people created, updated, deactivated, and unchanged
-- **History** — A log of recent syncs with timestamps and record counts
+- **Sync Status** — last sync result and a **Sync Now** button
+- **Schedule** — the automatic-sync interval, with **Change** to adjust it
+- **Configuration** — connection, scope, and filter, with **Edit** and **Disconnect**
+- **Field Mappings** — a summary of mapped fields, with **Edit** to reopen mapping
 
 ### What happens to existing data
 
@@ -154,7 +168,10 @@ Directory sync never deletes people permanently — it **deactivates** them. You
 
 - **Unmapped fields** — directory fields you didn't map are ignored
 - **Local-only fields** — fields you added manually to the Master List schema (not mapped to any directory field) are preserved and never overwritten by sync
-- **Photos** — directory sync doesn't pull photos from Entra. Photos flow into CaptrID through sessions and self-upload
+
+### Photos
+
+Directory sync **pulls each person's profile photo from Entra** when one is set, so headshots populate automatically alongside their data. A photo captured or approved in CaptrID is preserved — sync won't overwrite it. People without an Entra photo can still receive one through [sessions](/admin-guide/creating-a-session) or [self-upload](/admin-guide/self-service-photo-upload).
 
 ## Editing synced people
 
@@ -186,6 +203,6 @@ To stop syncing a Master List from the directory:
 |-------|-------|----------|
 | "Connection failed" on test | Invalid credentials or missing permissions | Verify Tenant ID, Client ID, and Client Secret. Check API permissions are admin-consented. |
 | Sync creates duplicates | UID field mismatch between syncs | Ensure the UID mapping hasn't changed. Use a stable field like `employeeId`. |
-| People not appearing after sync | Wrong group selected, or people not in the scoped group | Check the group membership in Entra. Try a full sync. |
-| Fields showing old data | Delta sync missed a change | Run a full sync to reconcile all records. |
+| People not appearing after sync | Wrong group selected, or people not in the scoped group | Check the group membership in Entra, then run **Sync Now**. |
+| Photos not importing | The person has no profile photo set in Entra | Confirm the photo exists on the Entra user; people without one can receive a photo via a session or self-upload. |
 | "0 users found" in group | Group has no members, or permissions don't cover that group | Verify group membership in Entra and that the app has `GroupMember.Read.All` permission. |

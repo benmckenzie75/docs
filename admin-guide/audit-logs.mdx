@@ -26,19 +26,24 @@ Each log entry shows:
 
 ## Filtering and searching
 
-Use the filters at the top to narrow down the log:
+Use the controls at the top to narrow down the log:
 
-<Frame caption="Audit log filter controls with dropdowns for entity type, action, and a date range picker">
-  <img src="/images/admin-guide/audit-logs-filters.png" alt="Audit log filter bar with entity type dropdown, action dropdown, and date range selector" />
+<Frame caption="Audit log filtered by entity type — here, showing only wallet template events">
+  <img src="/images/admin-guide/audit-logs-filters.png" alt="Audit log filter bar with a free-text search box, entity type dropdown set to Wallet Template, action dropdown, and date range selector" />
 </Frame>
 
 | Filter | Options |
 |--------|---------|
-| **Entity type** | Session, Submission, Master List, Person, Changeset, Card Template, Wallet Pass, Organisation |
-| **Action** | Created, Updated, Deleted, Approved, Rejected, Applied, Rolled Back, Erased |
+| **Search** | Free-text search across user email and entity name |
+| **Entity type** | Session, Session Field, Submission/Photo, Master List, Person, Changeset, Card Template, Wallet Template, Wallet Pass, Directory Sync, User, Export, Billing, Organisation |
+| **Action** | Created, Updated, Deleted, Archived, Approved, Rejected, Applied, Rolled Back, Deactivated, Reactivated, Erased, and more |
 | **Date range** | From/to date picker |
 
-Filters combine with **AND** logic — for example, you can see all submissions that were rejected in the last 7 days.
+Filters combine with **AND** logic — for example, you can search a user's email *and* filter to **Wallet Template** events in the last 7 days.
+
+<Tip>
+The entity-type filter is the quickest way to audit one area — set it to **Wallet Template** to see every pass-template change, or **Directory Sync** to review configuration changes to a connection.
+</Tip>
 
 ## Common action types
 
@@ -52,16 +57,29 @@ Filters combine with **AND** logic — for example, you can see all submissions 
 | `changeset.applied` | A changeset is applied to a Master List |
 | `changeset.rolled_back` | A changeset is rolled back |
 | `person.created` | A person is added to a Master List or session |
+| `person.deactivated` / `person.reactivated` | A person is soft-deleted or restored |
 | `person.erased` | A person's data is permanently erased (GDPR) |
+| `master_list.deleted` | A Master List is deleted (its passes are revoked first) |
 | `pass.generated` | A wallet pass is created |
 | `pass.revoked` | A wallet pass is revoked |
 | `pass.verified` | A wallet pass QR code is scanned for verification |
+| `wallet_template.created` / `.updated` / `.archived` | A wallet pass template changes |
+| `directory.configured` / `.scheduled` / `.removed` | A directory connection's sync config changes |
+| `user.created` | A team member is added to the organisation |
+| `export.started` / `.completed` / `.downloaded` | An export job moves through its lifecycle |
+| `billing.*` | Plan changes, subscription, and payment events from Stripe |
+
+This isn't the full list — coverage has expanded across billing, provisioning, directory sync, exports, and per-field schema changes. Use the **Entity type** filter to browse a specific area.
 
 ## Exporting audit logs
 
 Click **Export to CSV** to download the filtered log entries as a spreadsheet. This is useful for compliance reporting or sharing with auditors.
 
 The export includes all columns: date, user, action, entity type, entity name, and details.
+
+<Info>
+Exports are capped at **10,000 rows**. If your filtered result exceeds this, CaptrID warns you and exports the most recent 10,000 — narrow the date range or entity type to capture the rest.
+</Info>
 
 ## Who can see audit logs
 
