@@ -14,7 +14,9 @@ When a handover doc is written, the docs update should be part of the same workf
 | `admin-guide/self-service-photo-upload.mdx` | Self-upload edge functions | Unknown |
 | `admin-guide/plans-and-limits.mdx` | `admin/lib/pricing_config.dart`, `docs/strategy/PRICING_AND_GTM.md` | 2026-04-02 |
 | `admin-guide/bulk-photo-upload.mdx` | Bulk upload service, `docs/handovers/BULK_PHOTO_UPLOAD_HANDOVER.md` | 2026-04-03 |
-| `admin-guide/reviewing-photos.mdx` | Submissions service, approval RPC | Unknown |
+| `admin-guide/reviewing-photos.mdx` | Submissions service, approval RPC, quality-gate verdicts | 2026-08-15 |
+| `admin-guide/photo-day.mdx` | `photo_day_screen.dart`, `capture_core` guidance, `docs/features/FEAT_MOBILE_CAPTURE_GUIDANCE.md` | 2026-08-15 |
+| `admin-guide/standardising-photos.mdx` | `standardise-submission` + `queue-standardise-jobs` edge functions, `capture-quality-engine/`, `docs/features/FEAT_CAPTURE_QUALITY_ENGINE.md` | 2026-08-15 |
 | `admin-guide/saving-changes-to-master-list.mdx` | Changeset service | Unknown |
 | `admin-guide/creating-a-session.mdx` | Sessions service, session wizard | 2026-06-04 |
 | `admin-guide/session-templates.mdx` | Session templates service | 2026-06-04 |
@@ -26,7 +28,7 @@ When a handover doc is written, the docs update should be part of the same workf
 | `admin-guide/audit-logs.mdx` | `log_audit_event()` RPC | 2026-06-04 |
 | `admin-guide/data-sessions.mdx` | Data session workflow | Unknown |
 | `admin-guide/inviting-team-members.mdx` | `invite-user` edge function, user management service | Unknown |
-| `admin-guide/organisation-settings.mdx` | Org settings, coordinator permissions | Unknown |
+| `admin-guide/organisation-settings.mdx` | Org settings, coordinator permissions, capture defaults (AI capture assist, auto-standardise, backdrop library) | 2026-08-15 |
 | `admin-guide/billing.mdx` | Stripe webhook, billing service | Unknown |
 
 ## "Unknown" = not yet audited

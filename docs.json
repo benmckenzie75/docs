@@ -45,7 +45,9 @@
             "pages": [
               "admin-guide/creating-a-session",
               "admin-guide/session-templates",
+              "admin-guide/photo-day",
               "admin-guide/reviewing-photos",
+              "admin-guide/standardising-photos",
               "admin-guide/self-service-photo-upload",
               "admin-guide/bulk-photo-upload",
               "admin-guide/data-sessions",

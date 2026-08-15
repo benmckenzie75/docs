@@ -51,6 +51,36 @@ These settings are applied when creating new sessions. They can be overridden pe
 | **Default Filename Template** | ID Only, ID - First Last, Last, First - ID |
 | **Allow Walk-in Additions** | Let capturers add people not on the roster during capture |
 
+## Photo quality & AI capture assist
+
+These settings govern the automatic quality checks and live capture guidance across your organisation.
+
+| Setting | Default | Description |
+|---------|---------|-------------|
+| **Photo quality profile** | Standard | How strictly submitted photos are scored (sharpness, exposure, background, and — with AI capture assist on — face checks) |
+| **AI capture assist** | **Off** | The master switch for all face detection: live framing guidance in [Photo Day](/admin-guide/photo-day), face-based quality checks, and eyes-open detection |
+
+<Info>
+AI capture assist is **off by default** — a new organisation never scans faces without opting in. When it's on, detection runs on-device (in the browser or on the phone) purely to advise on framing and quality; no facial data is ever stored, transmitted, or used to identify anyone. When it's off, no face detection model runs on any surface — quality scoring continues with the non-biometric checks only.
+</Info>
+
+## Auto-standardise
+
+Automatically standardise every photo at the moment it's approved — background replaced, framing cropped, gentle enhancement applied — using the defaults you set here. See [Photo Quality & Standardisation](/admin-guide/standardising-photos).
+
+| Setting | Description |
+|---------|-------------|
+| **Auto-standardise on approval** | On / Off |
+| **Framing** | Passport, Head & shoulders, Half body, or No crop |
+| **Backdrop** | A solid colour or one of your uploaded backdrops |
+| **Enhancement** | Whether tone/colour/sharpness correction is applied |
+
+Photos you've already standardised by hand are never re-processed by the automatic pass.
+
+### Backdrop library
+
+Upload backdrop images here to make them available in the Standardise dialog and as the auto-standardise default — so every photo lands on your organisation's backdrop regardless of where it was captured.
+
 ## Data retention
 
 Control how long session data is kept after a session is closed.

@@ -1,0 +1,82 @@
+---
+title: "Photo Day (Webcam Capture)"
+description: "Capture photos against a session roster with a webcam, straight from the admin portal — with live framing guidance and optional auto-capture."
+---
+
+Photo Day turns the admin portal into a capture station. Instead of sending capturers out with the mobile app, a coordinator sits subjects in front of a webcam and works through the session roster: pick a person, capture, approve, next.
+
+<Info>
+Photo Day runs entirely in your browser. You'll need a webcam (a laptop's built-in camera works; an external 1080p webcam gives better results) and camera permission granted to the site.
+</Info>
+
+## Opening Photo Day
+
+1. Open your session and go to the **Submissions** tab.
+2. Select **Photo Day** in the top-right.
+3. Grant camera access when the browser asks.
+
+<Frame caption="The Photo Day capture screen with the session roster on the left and the live viewfinder in the centre.">
+  <img src="/images/admin-guide/photo-day-overview.png" alt="Photo Day screen showing a roster list of people on the left and a live webcam viewfinder with a head-and-shoulders outline guide in the centre." />
+</Frame>
+
+## Working the roster
+
+The left panel lists everyone in the session. Filter by **To do**, **Pending**, or **Done**, or search by name or ID. Selecting a person makes them the capture target — their name shows beneath the viewfinder ("Capturing: …").
+
+After each capture the roster refreshes, so you can watch the "captured" count climb as you work through the queue.
+
+## Framing
+
+The viewfinder draws a head-and-shoulders outline measured from real ID photos — ask the subject to fit their head to the outline with their eyes on the dashed line. The framing picker in the toolbar offers three presets:
+
+| Preset | Use for |
+|---|---|
+| **Passport** | Tight head shot — head fills most of the frame |
+| **Head & shoulders** | Standard ID card photo (the default) |
+| **Half body** | More distant framing with upper body visible |
+
+The picker opens on your organisation's configured framing default, and the outline matches what the server will produce — so a photo framed to the guide needs little or no cropping later.
+
+## Live capture guidance
+
+When your organisation has **AI capture assist** switched on (see [Organisation Settings](/admin-guide/organisation-settings)), Photo Day adds live guidance on top of the outline:
+
+- A row of live checks — **Distance, Centred, Level, Facing, Eyes, Gaze** — each ticking green as the subject aligns.
+- One instruction at a time beneath the viewfinder ("Move back", "Straighten your head", "Look at the camera"), always the most important fix first.
+- The outline turns green when every check passes.
+
+<Info>
+Guidance runs entirely on your device, in the browser. No image or video ever leaves the computer for guidance — face detection is used only to advise on framing, never to identify anyone. With AI capture assist switched off, Photo Day shows the static framing guide and skips detection altogether.
+</Info>
+
+## Capturing
+
+Select **Snap** to capture. The shot appears for review with two choices:
+
+- **Keep** — the photo is saved as a submission (and approved immediately if auto-approve is on).
+- **Retake** — the shot is discarded (any saved copy is rejected automatically) and the live view returns.
+
+### Auto-capture
+
+Switch on **Auto-capture** in the toolbar and Photo Day fires the shutter for you: once every guidance check has held green for a moment, a three-second countdown runs above the caption and the photo is taken. Any check dropping out — the subject moving, looking away — cancels the countdown. Blinking doesn't.
+
+Auto-capture requires AI capture assist, since it relies on the live checks.
+
+### Auto-approve
+
+With **Auto-approve** on, each kept capture is approved on the spot — the subject is done the moment the shutter fires. A newer approved photo automatically supersedes the previous one, and an auto-approved photo can still be rejected later from the review screen if you spot a problem.
+
+## Quality scores
+
+Seconds after each capture, the server scores the photo (sharpness, exposure, background, and — where enabled — face checks) and the verdict appears beside the review. See [Standardising Photos](/admin-guide/standardising-photos) for what the scores mean.
+
+<Tip>
+The scoring engine wakes up as soon as you open Photo Day, so the first capture's score normally arrives within a few seconds. If a score shows as pending, it will still appear against the submission in the review tab shortly.
+</Tip>
+
+## Tips for a smooth session
+
+- Set up against a plain, evenly lit background — [auto-standardise](/admin-guide/standardising-photos) can replace the backdrop later, but a clean source photo always finishes better.
+- Position the webcam at the subject's eye level if you can; a camera looking up or down makes the "Facing" check harder to satisfy.
+- Use **Auto-capture + Auto-approve** for long queues: subject sits, aligns, the countdown fires, next person.
+- Keep an eye on the quality verdicts — a run of low scores usually means the lighting or camera focus has drifted.

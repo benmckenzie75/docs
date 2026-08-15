@@ -1,0 +1,66 @@
+---
+title: "Photo Quality & Standardisation"
+description: "Automatic quality scoring for every submitted photo, and one-click Studio-ID standardisation — background replacement, framing, and enhancement."
+---
+
+Two features work together to turn everyday captures into consistent, production-ready ID photos:
+
+- **Quality scoring** — every submitted photo is checked server-side seconds after upload, and the verdict is shown wherever you review photos.
+- **Studio-ID standardisation** — one click replaces the background, crops to your chosen framing, and applies gentle enhancement, producing the photo your cards, exports, and wallet passes actually use.
+
+<Info>
+Both run on CaptrID's image engine in Australia (`australia-southeast1`). Photos are processed in memory and never stored or logged by the engine — only the finished image is saved back to your organisation's storage, exactly like any captured photo.
+</Info>
+
+## Quality scores
+
+Each submission receives a quality verdict: a score plus any flags (blurry, under- or over-exposed, busy background, and — when your organisation has face checks enabled — face size, position, and eyes-open checks). The verdict badge appears in the review screens beside each photo.
+
+Which checks run is governed by your organisation's **photo quality profile** and **AI capture assist** setting — see [Organisation Settings](/admin-guide/organisation-settings). With AI capture assist off, only the non-biometric checks (sharpness, exposure, background) run.
+
+<Tip>
+Use verdicts as a triage aid, not a gate: a flagged photo is worth a closer look, but the final call is always yours. Approving or rejecting works the same regardless of score.
+</Tip>
+
+## Standardising a single photo
+
+From a photo's review view, select **Standardise**. The dialog shows a before/after preview with three controls:
+
+1. **Framing** — passport, head & shoulders, half body, or no crop.
+2. **Background** — replace with a solid colour or one of your organisation's uploaded backdrops, keep the original, or output a transparent background.
+3. **Enhancement** — gentle tone, colour, and sharpness correction. Independent of the background work, so you can correct without recropping or vice versa.
+
+Select **Generate** to preview. Nothing is committed until you select **Done** — closing the dialog or selecting **Cancel** discards the preview and leaves the photo exactly as it was. **Adjust** lets you re-crop the generated result by hand.
+
+<Frame caption="The Standardise dialog with a before/after preview, framing and background controls.">
+  <img src="/images/admin-guide/standardise-dialog.png" alt="Standardise dialog showing the original photo beside the standardised result on a plain blue backdrop, with framing, background and enhancement controls below." />
+</Frame>
+
+The standardised image becomes the photo used by exports, card production, and wallet passes. The original capture is always kept untouched — **Remove standardisation** restores it at any time.
+
+## Backdrop library
+
+Upload your organisation's backdrop images (a branded blue, a house style grey) in Organisation Settings. Uploaded backdrops appear in the Standardise dialog's background picker alongside solid colours, so every photo lands on the same backdrop regardless of where it was captured.
+
+## Auto-standardise on approval
+
+Switch on **Auto-standardise** in Organisation Settings and every photo is standardised automatically at the moment it's approved, using your organisation's default framing, backdrop, and enhancement. Photos you've already standardised by hand are left alone — the automatic pass never overrules a deliberate manual choice.
+
+Standardisation runs in the background: approval is instant, and the finished image catches up seconds later.
+
+## Bulk standardise
+
+To standardise many photos at once, select people in the Submissions tab and choose **Standardise**. Bulk batches run server-side as a background queue:
+
+- A banner above the submissions grid shows overall progress — for example "3 of 20 done (4 batches)" — and keeps counting even if you navigate away and come back.
+- Select **View** for per-photo progress. When several batches are running, step between them with the batch switcher.
+- **Cancel job** stops a running batch; photos already finished keep their result.
+- **Undo** on a finished batch restores every photo's previous state — including photos that previously had no standardisation.
+
+<Info>
+The first photo after a quiet period can take a minute or two while the image engine starts up; the rest follow in seconds. The progress dialog tells you when this is happening.
+</Info>
+
+## Standardisation and your master list
+
+Standardised photos flow to the master list through the normal [changeset review](/admin-guide/saving-changes-to-master-list): re-standardising an already-pushed photo, or removing its standardisation, registers as a photo change for you to review and apply. Nothing reaches the master list without that review.
