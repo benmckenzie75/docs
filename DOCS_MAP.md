@@ -18,7 +18,7 @@ When a handover doc is written, the docs update should be part of the same workf
 | `admin-guide/two-factor-authentication.mdx` | `mfa_service.dart`, `mfa_enrollment_screen.dart`, `mfa_challenge_screen.dart` | 2026-08-24 |
 | `admin-guide/automated-provisioning.mdx` | SCIM edge function, `.claude/rules/module-scim.md`, `docs/handovers/SCIM_HANDOVER.md` | 2026-04-02 |
 | `admin-guide/digital-cards.mdx` | Wallet pass edge functions, `.claude/rules/module-wallet-passes.md` | 2026-08-24 |
-| `admin-guide/self-service-photo-upload.mdx` | Self-upload edge functions | Unknown |
+| `admin-guide/self-service-photo-upload.mdx` | Self-upload edge functions | 2026-08-24 |
 | `admin-guide/plans-and-limits.mdx` | `admin/lib/pricing_config.dart`, `docs/strategy/PRICING_AND_GTM.md` | 2026-04-02 |
 | `admin-guide/bulk-photo-upload.mdx` | Bulk upload service, `docs/handovers/BULK_PHOTO_UPLOAD_HANDOVER.md` | 2026-04-03 |
 | `admin-guide/reviewing-photos.mdx` | Submissions service, approval RPC, quality-gate verdicts | 2026-08-15 |
