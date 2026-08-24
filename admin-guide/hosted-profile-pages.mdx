@@ -1,0 +1,135 @@
+---
+title: "Hosted Profile Pages"
+description: "Give every person a public, branded profile page at a shareable link — and optionally turn it into a live, verifiable credential that shows revoked the moment you deactivate them."
+---
+
+A **profile page** is a public page for one person, reached by an opaque link or a QR code. No login, nothing to install. You control what appears on it, how it is branded, and whether it acts as a verifiable credential.
+
+It is the answer to *"how does someone check this ID is real?"* without giving anyone access to your roster.
+
+<Info>
+Profile pages are available on **all plans**. Removing CaptrID branding requires **Business** or above. The wallet-pass barcode that links to a profile needs **Pro** or above, since it depends on Digital Cards.
+</Info>
+
+## The three pieces
+
+| Piece | What it does | Where you set it |
+|---|---|---|
+| **Branding** | Your colours, logo and icon, applied to every hosted page | Organisation Settings → Branding |
+| **Profile template** | The layout — what appears on the page and how | Credentials → Profile Pages |
+| **Verification** | An optional strip that makes the page a live credential | A toggle inside the template |
+
+## Step 1: Brand your hosted pages
+
+Go to **Organisation Settings → Branding**.
+
+- **Primary colour** — your main brand colour, used for the header band
+- **Secondary colour** — the accent for headings and highlights (optional)
+- **Logo** — your full wordmark. A transparent PNG works best
+- **Icon** — a square mark, used where a wordmark will not fit
+
+Set this once and it applies to every profile page and verification page your organisation issues.
+
+<Info>
+On **Business** and above you can switch off the CaptrID footer entirely for fully white-label pages. On other plans the page carries a small *"Secured by CaptrID"* footer.
+</Info>
+
+## Step 2: Create a profile template
+
+Go to **Credentials → Profile Pages → New template**.
+
+### Persona
+
+Student, Staff, Member or Generic. This sets the vocabulary on the page and decides which templates are recommended when you assign one to a list. It is independent of the page type.
+
+### Page type
+
+This is the important choice, and it depends on what data you actually hold.
+
+| Page type | Shows | Use it when |
+|---|---|---|
+| **Enrolment page** | Courses grouped into *Currently studying*, *Completed* and *Upcoming* | Your list syncs enrolment data — aXcelerate or a school SIS |
+| **Field list** | A chosen set of schema fields | Directory, staff, member or manual lists — Entra, SCIM, Airtable, CSV |
+
+<Warning>
+An **Enrolment page needs enrolment data**. If your list comes from a directory or was imported manually, there are no courses to group, so use **Field list** instead.
+</Warning>
+
+### Choosing fields (Field list only)
+
+Pick the source list under **Fields from**, then tick the fields to publish. Set which field or fields form the person's name, and whether the layout is stacked or inline.
+
+<Warning>
+**This page is public.** Anyone with the link can see everything on it.
+
+Publish card-safe fields only — the sort of thing already printed on the front of an ID card. **No date of birth, no email address, no phone number, no USI.** The editor says the same thing next to the field picker, and it is worth repeating here: a profile page is a public artefact, not an internal record.
+</Warning>
+
+### Style
+
+Header alignment and whether it shows your logo or icon, heading colour, card background, body text colour, and the photo shape. There is a live preview, so you can see the result as you go.
+
+### Enrolment display options
+
+For enrolment pages:
+
+- **Show cancelled enrolments** — off by default, so cancelled courses stay off the public page
+- **Upcoming under Currently studying** — off by default, so upcoming courses appear under *Other enrolments* instead
+
+Both default to the quieter option deliberately: a page showing someone's cancelled courses to anyone with the link is rarely what you want.
+
+## Step 3: Turn on verification (optional)
+
+Toggle **Show verification** in the template and the page gains an authenticity strip: who issued it, whether it is currently active, and when it was checked.
+
+The strip is driven by **the person's active status on your roster**. Deactivate someone and their page shows **Revoked** immediately — no reissue, no expiry to wait for.
+
+<Info>
+**Two different verifications, which is worth keeping straight:**
+
+- **`/p/` — the profile page** verifies *the person*: are they currently active on the roster?
+- **`/v/` — the verify page** verifies *a specific digital card*: is this pass still valid?
+
+They answer different questions. A person can be active while an individual card has been revoked.
+</Info>
+
+## Step 4: Assign a template to a list
+
+Open a Master List → **Settings** tab → **Credential Templates** → **Profile template** → **Change**.
+
+Templates matching the list's persona are marked **Recommended**. You can also choose **Organisation default** so the list inherits whatever the default is.
+
+To set a default, use **Set as organisation default** inside the template. Any list without its own template uses it.
+
+<Tip>
+Most organisations end up with two templates: one for students, one for staff. Set the student one as the organisation default and assign the staff template explicitly to staff lists.
+</Tip>
+
+## Co-branding
+
+Where a person's record came from a synced system, the page can carry a *"Powered by"* line naming that source — for example an aXcelerate wordmark on a page built from an aXcelerate list.
+
+This is on by default and can be switched off per organisation.
+
+## What a profile page is not
+
+- **Not a login.** There are no accounts and no sign-in. The link is the credential, so treat it accordingly.
+- **Not searchable.** Links are opaque and are not listed or indexed anywhere. Someone needs the link or the QR code.
+- **Not a record of everything you hold.** It shows only what the template publishes — which should be the card-safe subset.
+
+## Related
+
+<CardGroup cols={2}>
+  <Card title="Digital Cards" icon="wallet" href="/admin-guide/digital-cards">
+    Apple and Google Wallet passes, which can carry a QR to the profile page
+  </Card>
+  <Card title="Organisation Settings" icon="gear" href="/admin-guide/organisation-settings">
+    Where branding lives
+  </Card>
+  <Card title="Managing Master Lists" icon="list" href="/admin-guide/managing-master-lists">
+    Assigning templates and managing active status
+  </Card>
+  <Card title="Person Erasure" icon="trash" href="/admin-guide/person-erasure">
+    Removing someone entirely, including their profile page
+  </Card>
+</CardGroup>

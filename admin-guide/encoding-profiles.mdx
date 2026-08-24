@@ -1,0 +1,110 @@
+---
+title: "Encoding Profiles"
+description: "Define what gets written to the chip in a smart card — a tap-to-web link, field data on MIFARE or DESFire, or a magnetic stripe — so every card you print is encoded the same way."
+---
+
+An **encoding profile** describes what CaptrID writes onto a card's chip when it prints. Define it once, attach it to a Master List, and every card produced from that list is encoded identically.
+
+Without a profile, printing produces a card with your design on it and nothing on the chip.
+
+<Info>
+Encoding profiles configure the encoding. **Actually writing to a card needs the CaptrID print utility**, a small desktop application that talks to your printer and encoder over USB. It is not a download — [contact us](/support) and we will provide it.
+
+You can build and save profiles before you have the utility; they simply will not do anything until a machine is set up to print.
+</Info>
+
+You will find them under **Encoding Profiles** in the sidebar.
+
+## Choosing a card technology
+
+This is the first decision and the one worth getting right, because it depends on what your card is for and what your other systems already read.
+
+| Technology | Best for | Notes |
+|---|---|---|
+| **NTAG / NFC (tap-to-web)** | A card that opens a web page when tapped | Read by any phone. No reader needed |
+| **MIFARE Classic 1K** | Working with existing access control | Very widely supported by installed readers |
+| **DESFire EV3** | Newer access control, or tap-to-web with better security | Either a tap-to-web URL or structured data |
+| **Magnetic stripe** | Legacy systems that read a stripe | Can be combined with a chip |
+
+<Tip>
+If the card has to open a door, **ask whoever maintains your access control what their readers expect** before building a profile. Getting the technology wrong means reprinting the batch.
+</Tip>
+
+## Tap-to-web (NDEF)
+
+The simplest option: the chip holds a URL, and tapping the card with a phone opens it. Point it at the person's [profile page](/admin-guide/hosted-profile-pages) and a tap becomes an instant credential check.
+
+Build the URL from a template with placeholders that fill in per person.
+
+<Warning>
+**A tap-to-web card is readable by anyone with a phone — and rewritable by them too, unless you lock it.**
+
+If the cards leave your building, add a **4-byte password block** under **Advanced** to lock writes. Otherwise someone can point your card at a URL of their choosing.
+</Warning>
+
+## MIFARE Classic 1K
+
+A 1K card is divided into sectors, each with blocks that hold data. Tap a sector in the editor to bind its blocks to fields from your Master List.
+
+Two things the editor enforces, both physical properties of the card rather than choices:
+
+- **Block 0 is the manufacturer block** and holds the card's UID. It is not writable.
+- **Block 3 of every sector is the trailer**, holding keys and access bits. It cannot hold your data.
+
+### Keys
+
+**Key A** authenticates every sector. The factory default is `FF FF FF FF FF FF`, and for a simple card that is fine.
+
+Choose an organisation key instead when the card controls access to something that matters. An organisation key means a card cannot be read or rewritten by anyone with an off-the-shelf reader.
+
+<Warning>
+Keys are **locked on existing profiles** — you cannot change the key on a profile that has already produced cards, because the cards in circulation still use the old one. Clone the profile to use a different key, and be clear about which batch has which.
+</Warning>
+
+## DESFire EV3
+
+DESFire works in one of two modes:
+
+- **Tap-to-web** — an NDEF URL, as above
+- **Data files** — structured data in applications
+
+For data files, each **application** needs a 6-hex-digit **AID** (3 bytes) and at least one file. File IDs run from 0 to 31. Bind each file to a field from your list.
+
+DESFire has its own card-level key for create and format operations. As with MIFARE, the factory default suits simple cards; an organisation key suits cards that gate access.
+
+## Field bindings
+
+Whatever the technology, encoding comes down to **field bindings**: which field from your Master List goes where on the chip, and how it is encoded.
+
+Each binding needs a **logical key** — the name your other systems reference. It is auto-filled from the source field name, and you only rename it to reuse a key across lists. If two lists both produce cards a door controller reads as `employee_id`, give both bindings that same logical key.
+
+Preview the encoded bytes before saving. It is much cheaper than discovering a mis-encoding after printing three hundred cards.
+
+## Magnetic stripe
+
+For cards that carry both a chip and a stripe, or a stripe alone. Set the track data as your legacy system expects it.
+
+<Warning>
+**Magnetic-stripe encoding is proven at the printer but not yet wired end-to-end.** Bench-test it before relying on it for a production run.
+</Warning>
+
+## Archiving a profile
+
+Archiving stops a profile appearing in the print wizard. Cards already produced with it are unaffected — they carry what they were encoded with, and archiving does not reach out to change them.
+
+## Related
+
+<CardGroup cols={2}>
+  <Card title="Card Printers" icon="print" href="/admin-guide/card-printers">
+    Registering the printer and encoder that use these profiles
+  </Card>
+  <Card title="Printing ID Cards" icon="id-card" href="/admin-guide/printing-id-cards">
+    The print wizard, and exporting print-ready PDFs
+  </Card>
+  <Card title="Creating Card Templates" icon="palette" href="/admin-guide/creating-card-templates">
+    The visual design, as opposed to the chip contents
+  </Card>
+  <Card title="Support" icon="life-ring" href="/support">
+    Getting the print utility set up
+  </Card>
+</CardGroup>

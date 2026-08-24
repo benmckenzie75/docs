@@ -1,0 +1,87 @@
+---
+title: "Card Printers"
+description: "Register the card printers and encoders your organisation prints to, and optionally push card numbers into PaperCut so tap-to-release works the moment a card is handed over."
+---
+
+Before anyone can print a physical card, the printer has to be **curated** — added to your organisation's list of approved devices. Curating a printer once makes it available to everyone in your organisation who prints, rather than each person configuring their own.
+
+You will find this under **Admin → Card Printers**.
+
+<Info>
+Printers are discovered by the **CaptrID Print Service**, a small desktop application that runs on the workstation attached to your printer and encoder. It is not a download — [contact us](/support) and we will provide it.
+</Info>
+
+## How discovery works
+
+The screen has two lists:
+
+| List | What it means |
+|---|---|
+| **Available on this workstation** | Detected by the local print engine, not yet curated |
+| **Curated for this organisation** | Enabled and available to everyone who prints |
+
+If **Available on this workstation** is empty and you see *"Local print engine unreachable"*, the print service is not running on the machine you are using. Start it, then refresh discovery.
+
+<Info>
+Discovery is per-workstation, but curation is per-organisation. You curate a printer from the machine it is attached to, and from then on it appears in the Print Card dialog for everyone.
+</Info>
+
+## Curating a printer
+
+1. Start the CaptrID Print Service on the workstation attached to the printer
+2. Open **Admin → Card Printers** and refresh discovery
+3. Find the printer under **Available on this workstation** and enable it
+4. Give it a friendly name — something people will recognise, like *Front Office ZC300*, rather than the model string
+
+Removing a printer takes it out of the curated list. It reappears under **Available on this workstation** if the engine still finds it, so removing is not permanent.
+
+## PaperCut integration
+
+If your organisation runs **PaperCut NG or MF** for print management, CaptrID can write each card's number straight into PaperCut as it is printed. Staff and students then tap their new ID at the printer and it releases their job — with no one re-keying card numbers into PaperCut by hand.
+
+### Setting it up
+
+You will need your PaperCut server URL and an auth token.
+
+1. In PaperCut's **Config Editor**, find the key `auth.webservices.auth-token` and set a token
+2. Add the CaptrID print station to **Options → Advanced → Allowed XML Web Services callers**
+3. In CaptrID, enter the server URL and the token, and run the test
+
+<Info>
+Once a token is stored you can leave the field blank when editing — the test will reuse the saved one. Removing the connection deletes the stored token and stops every list sending card numbers.
+</Info>
+
+### Card number format
+
+This is the part that catches people out.
+
+**Chip serials are captured as hex, but PaperCut compares card numbers as plain text.** If the format does not match what PaperCut expects, the tap will simply not be recognised — the card is fine, the number is fine, and they do not match.
+
+CaptrID lets you set the format so the two agree.
+
+<Warning>
+**Confirm with a physical tap test before relying on it.** A wrong format looks exactly like a working setup right up until someone stands at a printer holding a card that does nothing.
+
+Print one card, tap it at the printer, and check the job releases. Then do the batch.
+</Warning>
+
+### When it sends
+
+Card numbers are sent **as cards are printed**. There is no separate sync step and no batch to remember to run.
+
+## Related
+
+<CardGroup cols={2}>
+  <Card title="Encoding Profiles" icon="memory" href="/admin-guide/encoding-profiles">
+    What gets written to the chip
+  </Card>
+  <Card title="Printing ID Cards" icon="id-card" href="/admin-guide/printing-id-cards">
+    The print wizard itself
+  </Card>
+  <Card title="Creating Card Templates" icon="palette" href="/admin-guide/creating-card-templates">
+    Designing what the card looks like
+  </Card>
+  <Card title="Support" icon="life-ring" href="/support">
+    Getting the print service set up
+  </Card>
+</CardGroup>

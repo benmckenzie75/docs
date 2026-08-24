@@ -59,7 +59,8 @@
           {
             "group": "Syncing Data",
             "pages": [
-              "admin-guide/saving-changes-to-master-list"
+              "admin-guide/saving-changes-to-master-list",
+              "admin-guide/automations"
             ]
           },
           {
@@ -67,7 +68,10 @@
             "pages": [
               "admin-guide/creating-card-templates",
               "admin-guide/printing-id-cards",
-              "admin-guide/digital-cards"
+              "admin-guide/encoding-profiles",
+              "admin-guide/card-printers",
+              "admin-guide/digital-cards",
+              "admin-guide/hosted-profile-pages"
             ]
           },
           {
@@ -90,6 +94,7 @@
               "admin-guide/dashboard",
               "admin-guide/analytics",
               "admin-guide/managing-your-account",
+              "admin-guide/two-factor-authentication",
               "admin-guide/keyboard-shortcuts",
               "support"
             ]

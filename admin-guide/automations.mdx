@@ -1,0 +1,95 @@
+---
+title: "Automations"
+description: "Issue, suspend, reinstate or revoke digital cards automatically when a field on your roster changes — or when a date passes."
+---
+
+An **automation** is a rule that watches a Master List and acts on digital cards without anyone clicking anything. When a student's status changes to *Enrolled*, issue their card. When an expiry date passes, revoke it.
+
+You find them on a Master List's **Automations** tab.
+
+<Info>
+Automations act on **digital cards**, so you need at least one card template before you can create a rule. The tab will tell you as much: *"Automations issue or revoke digital cards, so they need at least one card template."*
+</Info>
+
+## What a rule is made of
+
+Every rule is: **when this happens → do this to their card**.
+
+### Triggers
+
+| Trigger | Fires when | Example |
+|---|---|---|
+| **A field changes** | A field on the person's record becomes a value you specify | Status becomes `Enrolled` |
+| **A date passes** | A date field is now in the past, or falls within a set number of days | Expiry date is past |
+
+Field triggers are checked as changes happen — an edit, a CSV import or a directory sync all count. Date triggers are checked once a day, so a rule watching an expiry date fires on the day it passes, not the second it does.
+
+<Info>
+You can trigger on the built-in **Active / Inactive** status as well as on your own schema fields. These are genuinely separate things: the built-in status controls whether a person is active in CaptrID, while a field you created called something like "Status" is just data. If you have both, be clear which one your rule is watching.
+</Info>
+
+### Conditions
+
+Add as many conditions as you need and choose whether **all** of them must be true or **any** of them. Text, number, date, dropdown and yes/no fields are all supported, with the operators you would expect — equals, contains, is past, within N days.
+
+### Actions
+
+Every action operates on the person's digital card:
+
+| Action | Effect | Reversible |
+|---|---|---|
+| **Issue** | Creates their wallet pass | — |
+| **Issue & email** | Creates the pass and emails them the link | — |
+| **Suspend** | Deactivates the pass — it shows as suspended rather than valid | Yes |
+| **Reinstate** | Brings a suspended pass back | — |
+| **Revoke** | Permanently invalidates the pass | No |
+
+<Tip>
+**Suspend is usually the right choice over revoke.** A student on leave, a contractor between assignments, a staff member mid-investigation — all of those come back. Suspend is reversible; revoke is not, and a revoked card has to be reissued from scratch.
+</Tip>
+
+## Creating a rule
+
+1. Open a Master List and go to the **Automations** tab
+2. **Create a rule** — give it a name that says what it does, because that name is what you will see in the run history
+3. Choose the trigger and add conditions
+4. Choose the action and the card template it applies to
+5. Save
+
+The rule is live immediately.
+
+## Watching them run
+
+Each rule shows its own history on the tab:
+
+- **Last run** and how many times it has run in total
+- **Last run failed — N time(s)** if it is erroring
+
+<Warning>
+A rule that keeps failing is worth opening rather than ignoring. The usual causes are a card template that was archived out from under the rule, or a field that was renamed or removed since the rule was written.
+</Warning>
+
+## Worth knowing before you build one
+
+**Rules fire on the change, not on the state.** A rule watching for status becoming `Enrolled` fires when someone *becomes* enrolled. It will not retrospectively issue cards to people who were already enrolled when you created the rule — issue those in bulk once, then let the rule handle new arrivals.
+
+**Test on a small list first.** A rule on a list of two thousand people will do two thousand things. If you are automating issue-and-email, that is two thousand emails.
+
+**Order matters when rules overlap.** Two rules watching the same field can both fire. Prefer one rule with several conditions over several rules that might disagree.
+
+## Related
+
+<CardGroup cols={2}>
+  <Card title="Digital Cards" icon="wallet" href="/admin-guide/digital-cards">
+    Wallet passes — what automations issue and revoke
+  </Card>
+  <Card title="Managing Master Lists" icon="list" href="/admin-guide/managing-master-lists">
+    Schema fields, and the built-in active status
+  </Card>
+  <Card title="Directory Sync" icon="arrows-rotate" href="/admin-guide/directory-sync">
+    Keeping the fields your rules watch up to date
+  </Card>
+  <Card title="Audit Logs" icon="clipboard-list" href="/admin-guide/audit-logs">
+    A record of what automations did
+  </Card>
+</CardGroup>

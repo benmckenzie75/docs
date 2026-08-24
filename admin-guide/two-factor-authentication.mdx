@@ -1,0 +1,74 @@
+---
+title: "Two-Factor Authentication"
+description: "Add a second step to your CaptrID sign-in using any authenticator app. Optional for most roles, and worth turning on for anyone who can see a roster."
+---
+
+Two-factor authentication (2FA) means signing in needs two things: your password, and a six-digit code from an app on your phone. If someone learns your password, that alone is not enough to get in.
+
+CaptrID uses **TOTP** — the standard behind Google Authenticator, Microsoft Authenticator, 1Password, Authy and most password managers. Any of them will work; there is nothing CaptrID-specific to install.
+
+<Info>
+2FA is **optional** for organisation admins, coordinators and capturers. It is **required** for CaptrID platform administrators.
+
+If you manage a roster of children's photographs, turning it on is a sensible five minutes.
+</Info>
+
+## Setting it up
+
+1. Open your account settings and choose **Set up two-factor authentication**
+2. A QR code appears — **scan it with your authenticator app**
+3. The app starts producing a six-digit code that changes every 30 seconds
+4. Enter the current code to confirm the pairing
+
+That is it. The next time you sign in, you will be asked for a code after your password.
+
+<Tip>
+If you cannot scan the QR code — you are on the same device as the app, for instance — most authenticator apps let you enter the setup key manually instead.
+</Tip>
+
+## Signing in afterwards
+
+Enter your email and password as usual, then enter the six-digit code from your authenticator.
+
+Codes rotate every 30 seconds. If one is rejected, wait for the next code rather than retrying the same one — the most common cause is a code that expired between reading it and typing it.
+
+## Turning it off
+
+You can remove your own authenticator from account settings. You will be asked to confirm with a current code first, so someone who has walked up to an unlocked laptop cannot quietly switch it off.
+
+## If you lose your phone
+
+This is the part to think about **before** it happens, because there is no self-service recovery.
+
+If you no longer have the device with your authenticator on it, you cannot complete sign-in and you cannot remove the factor yourself — removing it requires a valid code, which is exactly what you have lost.
+
+[Contact support](/support) and we will reset it after verifying who you are. If you are the **only** organisation admin, this is the difference between a ten-minute interruption and being locked out of your own organisation, so it is worth doing one of these first:
+
+- Use an authenticator that syncs across devices or backs up to your account — 1Password, Authy and Microsoft Authenticator all do
+- Add a second organisation admin, so somebody else can always get in
+
+<Warning>
+An authenticator app tied to a single phone, with no backup, and no second admin on the organisation, is a single point of failure. It is the most common way people lock themselves out.
+</Warning>
+
+## What 2FA does not cover
+
+- **The mobile capture app.** Capturers signing in on a phone are not challenged for a code.
+- **Public pages.** Profile pages and verification pages have no login at all — they are protected by having an unguessable link, not by a password.
+
+## Related
+
+<CardGroup cols={2}>
+  <Card title="Managing Your Account" icon="user" href="/admin-guide/managing-your-account">
+    Password, email address and profile settings
+  </Card>
+  <Card title="Inviting Team Members" icon="user-plus" href="/admin-guide/inviting-team-members">
+    Roles, and adding a second admin
+  </Card>
+  <Card title="Audit Logs" icon="clipboard-list" href="/admin-guide/audit-logs">
+    Seeing who did what, and when
+  </Card>
+  <Card title="Support" icon="life-ring" href="/support">
+    Resetting a lost authenticator
+  </Card>
+</CardGroup>
