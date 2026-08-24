@@ -24,23 +24,56 @@ You'll need:
 
 ### API permissions
 
-Grant these on the app registration as **Application** permissions (not Delegated), then click **Grant admin consent**.
-
-| Permission | Required? | What it is used for |
-|---|---|---|
-| `User.Read.All` | **Required** | Reading users, their profile fields, and their **profile photos** |
-| `GroupMember.Read.All` | **Required** | Listing groups and reading their members, so you can scope a sync to one group |
-| `Directory.Read.All` | **Recommended** | Discovering **custom directory extension attributes** so they appear as mappable fields |
-
 <Warning>
-**If you skip `Directory.Read.All`, the connection test still succeeds.** CaptrID asks Entra for your directory's custom extension properties, and if that call is refused it carries on without them rather than failing the whole test.
+**Set these as `Application` permissions, not `Delegated` — and click *Grant admin consent* afterwards.**
 
-The symptom appears later: a custom attribute your organisation defined is simply **missing from the field-mapping list**, with nothing to say why. If you are looking for one and cannot find it, this permission is the first thing to check.
+This is the single most common setup problem, and both ways of getting it wrong fail *quietly*:
+
+- **Delegated instead of Application** — Entra offers Delegated first in the picker, and the names are identical. A delegated permission needs a signed-in user; CaptrID syncs as a background service, so there is no user to act for.
+- **Application, but consent never granted** — the connection **authenticates successfully and reports zero users and zero groups**. It looks like an empty directory rather than a permissions problem.
+
+If **Test Connection** succeeds but finds nobody, it is almost always one of these two.
 </Warning>
+
+Grant all three on the app registration, then **Grant admin consent for &lt;your organisation&gt;**:
+
+| Permission | Type | What it is used for |
+|---|---|---|
+| `User.Read.All` | Application | Users, their profile fields, and their **profile photos** |
+| `Group.Read.All` | Application | Listing groups so you can pick one to scope the sync to |
+| `GroupMember.Read.All` | Application | Reading who is in that group |
+| `Directory.Read.All` | Application | **Optional but recommended** — discovering custom directory extension attributes |
+
+<Info>
+The first three are the configuration we test against and the one support will ask you to confirm.
+
+`Directory.Read.All` is optional and fails differently: without it the connection test still passes, but custom extension attributes your organisation defined never appear in the field-mapping list. See [Extension attributes](#extension-attributes).
+</Info>
 
 <Tip>
 Ask your IT administrator to create the app registration and grant the required permissions. They'll need to provide you with the Tenant ID, Clieon and grant the required permissions. They'll need to provide you with the Tenant ID, Client ID, and Client Secret.
 </Tip>
+
+### Creating the client secret
+
+<Warning>
+**Copy the `Value`, not the `Secret ID`.**
+
+Entra shows the two side by side and they look equally like credentials. The **Secret ID** is a GUID and is useless to CaptrID. The **Value** is roughly 40 characters and usually contains a `~`.
+
+The Value is shown **once, at the moment of creation**, and is masked permanently afterwards. There is no way to retrieve it later — if you did not copy it, the only fix is to create a new secret.
+</Warning>
+
+In the app registration:
+
+1. **Certificates & secrets → New client secret**
+2. Description: something recognisable, e.g. `CaptrID Sync`
+3. Expiry: 24 months
+4. **Add**, then immediately copy the **Value** column
+
+<Info>
+Note the expiry date somewhere. When a client secret expires the sync stops with an authentication error, and it is not obvious from the message that a rotated secret is all that is needed.
+</Info>
 
 ## Step 1: Add a directory connection
 
@@ -50,10 +83,11 @@ Ask your IT administrator to create the app registration and grant the required 
    - **Connection Name** — a label for your reference (e.g. "School Entra")
    - **Tenant ID** — from your Entra app registration
    - **Client ID** — from your Entra app registration
-   - **Client Secret** — from your Entra app registration
+   - **Client Secret** — the secret **Value**, not the Secret ID ([see above](#creating-the-client-secret))
 4. Click **Test Connection** to verify the credentials
    - Success shows the number of users and groups found in your directory
-   - If it fails, check your credentials and API permissions
+   - **A success reporting 0 users and 0 groups is not a success** — that is the permissions symptom described above, not an empty directory
+   - `AADSTS7000215` means the Secret ID was pasted instead of the Value
 5. Click **Save**
 
 <Frame caption="The Add Directory Connection dialog with a provider selector and fields for Tenant ID, Client ID, and Client Secret">
@@ -255,6 +289,9 @@ To stop syncing a Master List from the directory:
 
 | Issue | Cause | Solution |
 |-------|-------|----------|
+| `AADSTS7000215` — invalid client secret | The **Secret ID** was pasted instead of the secret **Value**. They sit next to each other in Entra and only the Value works | Create a new client secret and copy the **Value** column immediately — the original Value cannot be recovered once masked |
+| Test succeeds but finds **0 users and 0 groups** | Permissions are Delegated rather than Application, or admin consent was never granted | Set all three to **Application** type, click **Grant admin consent**, then test again |
+| Sync stopped working after months of running fine | The client secret expired | Create a new secret in the app registration and update it in CaptrID. Nothing else needs changing |
 | "Connection failed" on test | Invalid credentials or missing permissions | Verify Tenant ID, Client ID, and Client Secret. Check API permissions are admin-consented. |
 | Sync creates duplicates | UID field mismatch between syncs | Ensure the UID mapping hasn't changed. Use a stable field like `employeeId`. |
 | People not appearing after sync | Wrong group selected, or people not in the scoped group | Check the group membership in Entra, then run **Sync Now**. |
