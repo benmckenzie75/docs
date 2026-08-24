@@ -1,6 +1,6 @@
 ---
 title: "Importing a CSV Roster"
-description: "How to bulk-import people from a CSV spreadsheet into a Master List or session."
+description: "How to bulk-import people from a CSV or Excel spreadsheet into a Master List or session."
 ---
 
 CaptrID supports bulk importing people from CSV files into both **Master Lists** and **session rosters**. This is the fastest way to populate your roster if you have an existing spreadsheet of people.
@@ -11,8 +11,8 @@ Your CSV file should follow these guidelines:
 
 | Requirement | Detail |
 |-------------|--------|
-| **Format** | Standard CSV (comma-separated values) |
-| **Encoding** | UTF-8 recommended (handles special characters and accents) |
+| **Format** | CSV (comma-separated values) **or Excel (`.xlsx`)** — upload either |
+| **Encoding** | UTF-8 recommended. A byte-order mark from Excel is handled automatically |
 | **Header row** | First row must contain column names |
 | **UID column** | Must include a column for your unique identifier (e.g. Student ID, Employee Number) |
 | **No empty UID values** | Every row must have a value in the UID column |
@@ -69,6 +69,12 @@ You can also import a CSV directly into a session's roster during session creati
 <Warning>
 Session imports are subject to your plan's **people limit**. If the import would exceed your limit, it will be blocked. Check your current usage in **Billing**.
 </Warning>
+
+<Info>
+**Exporting from Excel?** You can upload the `.xlsx` file directly — there is no need to save as CSV first, which is where accented characters and the leading byte-order mark usually get mangled.
+
+If a file cannot be read at all, the import is rejected outright with an explanation rather than importing a partial or garbled roster.
+</Info>
 
 ## Common issues
 

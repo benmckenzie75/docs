@@ -118,3 +118,19 @@ For batches over 200 cards, the PDF may take a moment to generate. The wizard sh
     Issue Google Wallet IDs instead of (or alongside) physical cards.
   </Card>
 </Columns>
+
+## If a batch is interrupted
+
+Printing a large batch can be interrupted — a paper jam, a closed laptop, a workstation restart. CaptrID does not lose track of where it got to.
+
+When you return, the interrupted batch is **discovered automatically** and you are offered the choice to resume it. You do not have to work out which cards had already printed and re-select the remainder by hand.
+
+<Info>
+A card is flagged as **issued** whenever it prints, on any printer — including a print-only job with no encoding. So the issuance record reflects what physically came out of the machine, not only the cards that went through a chip write.
+</Info>
+
+## Printing while offline
+
+If the workstation loses its connection mid-run, issuance records are queued locally rather than dropped. They are sent when the connection returns, and again on next start-up, so a card printed during an outage still ends up on the record.
+
+The pending count is shown so you can see there is something waiting rather than assuming it went through.

@@ -75,6 +75,16 @@ From the **Schema** tab on your Master List:
 
 You can edit a field's label, type, required status, and options at any time. Field keys cannot be changed after creation — this protects data integrity.
 
+### Field roles
+
+A schema field can be given a **role** — telling CaptrID which field holds the person's first name, last name, and so on.
+
+Set these and the People list shows *Alice Johnson* instead of *EMP001*. Without them CaptrID has no way to know which of your fields is a name, so it falls back to the identifier.
+
+<Tip>
+Worth doing straight after you create a list. It costs a few seconds and it affects every screen where a person appears.
+</Tip>
+
 ## The UID field
 
 Every Master List must have exactly one **UID field** — a unique identifier for each person. This is the field that links people across sessions, imports, and sync operations.
@@ -85,6 +95,15 @@ Every Master List must have exactly one **UID field** — a unique identifier fo
 
 <Warning>
 The UID field is set when you create a Master List and **cannot be changed** once people exist in the list. Choose carefully — it's the foundation of how CaptrID tracks and matches people.
+</Warning>
+
+
+### Promoting or renaming a UID
+
+If you promote an existing field to be the UID, or rename the UID field, its other properties — type, options, whether it is required — are preserved. You are changing which field identifies people, not rebuilding it.
+
+<Warning>
+**A UID never supplies the person's name.** Even if your UID field is called something like "Student Name", CaptrID will not use it as the display name. Give a field the name role instead — see **Field roles** above.
 </Warning>
 
 ## Adding people
@@ -112,6 +131,12 @@ Key points:
 ### From directory sync or Airtable
 
 You can sync people automatically from an external source and keep the list current — including photos. See [Directory Sync](/admin-guide/directory-sync) for Microsoft Entra ID, or [Airtable Sync](/admin-guide/airtable-sync) for an Airtable base.
+
+## Adding a photo for one person
+
+You do not need a capture session to give someone a photo. Open their row in the Master List and upload one directly — useful for a late starter, a replacement headshot, or the handful of people who missed photo day.
+
+The photo behaves exactly like an approved capture: it feeds cards, wallet passes and profile pages.
 
 ## Editing people
 
