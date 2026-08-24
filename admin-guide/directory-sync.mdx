@@ -20,10 +20,26 @@ You'll need:
 | **Microsoft Entra ID tenant** | Your organisation's Entra tenant |
 | **App registration** | An application registered in Entra with API permissions (see below) |
 | **Credentials** | Tenant ID, Client ID, and Client Secret from the app registration |
-| **API permissions** | `User.Read.All` and `GroupMember.Read.All` (Application type, admin-consented) |
+| **API permissions** | See the table below — all **Application** type, admin-consented |
+
+### API permissions
+
+Grant these on the app registration as **Application** permissions (not Delegated), then click **Grant admin consent**.
+
+| Permission | Required? | What it is used for |
+|---|---|---|
+| `User.Read.All` | **Required** | Reading users, their profile fields, and their **profile photos** |
+| `GroupMember.Read.All` | **Required** | Listing groups and reading their members, so you can scope a sync to one group |
+| `Directory.Read.All` | **Recommended** | Discovering **custom directory extension attributes** so they appear as mappable fields |
+
+<Warning>
+**If you skip `Directory.Read.All`, the connection test still succeeds.** CaptrID asks Entra for your directory's custom extension properties, and if that call is refused it carries on without them rather than failing the whole test.
+
+The symptom appears later: a custom attribute your organisation defined is simply **missing from the field-mapping list**, with nothing to say why. If you are looking for one and cannot find it, this permission is the first thing to check.
+</Warning>
 
 <Tip>
-Ask your IT administrator to create the app registration and grant the required permissions. They'll need to provide you with the Tenant ID, Client ID, and Client Secret.
+Ask your IT administrator to create the app registration and grant the required permissions. They'll need to provide you with the Tenant ID, Clieon and grant the required permissions. They'll need to provide you with the Tenant ID, Client ID, and Client Secret.
 </Tip>
 
 ## Step 1: Add a directory connection
@@ -105,6 +121,21 @@ This is where you tell CaptrID which directory fields should populate which Mast
 - Lets you create new Master List fields on the fly, or bulk **Import all fields** into your schema
 - Requires you to select a **UID field** — the directory field that uniquely identifies each person (a stable HR/SIS identifier like `employeeId` is the best choice)
 
+### Extension attributes
+
+Schools and larger organisations often keep the field that actually matters — a student number, an employee ID, a house or campus code — in an extension attribute rather than a standard Entra field. CaptrID can map either kind, but they behave differently and it is worth knowing which you have.
+
+| Kind | Looks like | Needs |
+|---|---|---|
+| **On-premises extension attributes** | `extensionAttribute1` … `extensionAttribute15` | Nothing extra — these arrive with `User.Read.All`. Synced from on-prem AD |
+| **Directory extension attributes** | `extension_<appid>_<name>` | `Directory.Read.All`, so CaptrID can discover them |
+
+Both appear under **Extension Attributes** in the mapping wizard once they are visible, and both work as a UID.
+
+<Tip>
+`extensionAttribute1`–`15` are the classic place a student or employee number lives in a school that syncs from on-premises Active Directory. If your standard fields have nothing stable to key on, look there before giving up and using `mail`.
+</Tip>
+
 <Frame caption="The field mapping wizard showing directory fields mapped to Master List fields with sample data preview">
   <img src="/images/admin-guide/directory-field-mapping.png" alt="Field mapping wizard with directory fields on the left mapped to Master List fields on the right, showing sample values" />
 </Frame>
@@ -177,7 +208,24 @@ Directory sync never deletes people permanently — it **deactivates** them. You
 
 ### Photos
 
-Directory sync **pulls each person's profile photo from Entra** when one is set, so headshots populate automatically alongside their data. A photo captured or approved in CaptrID is preserved — sync won't overwrite it. People without an Entra photo can still receive one through [sessions](/admin-guide/creating-a-session) or [self-upload](/admin-guide/self-service-photo-upload).
+Directory sync **pulls each person's profile photo from Entra** when one is set, so headshots populate automatically alongside their data.
+
+Choose what happens when someone already has a photo:
+
+| Overwrite policy | Behaviour |
+|---|---|
+| **Only if missing** *(recommended)* | Entra fills gaps and never replaces an existing photo |
+| **Always** | Entra's copy wins on each sync |
+
+<Info>
+**A photo uploaded by hand is never overwritten by sync — not even on "Always".**
+
+This is deliberate. A manual upload exists to fill a gap the directory could not, and a scheduled sync quietly undoing that work would be the wrong outcome. If you *want* the directory to take that person back over, remove the manual photo and the next sync will supply one.
+
+It is worth knowing, because otherwise "Always" looks broken on exactly the people someone took the trouble to fix.
+</Info>
+
+Photos approved in a capture session are pushed to the Master List separately — see [Save to Master List](/admin-guide/saving-changes-to-master-list).
 
 ## Editing synced people
 
@@ -210,5 +258,6 @@ To stop syncing a Master List from the directory:
 | "Connection failed" on test | Invalid credentials or missing permissions | Verify Tenant ID, Client ID, and Client Secret. Check API permissions are admin-consented. |
 | Sync creates duplicates | UID field mismatch between syncs | Ensure the UID mapping hasn't changed. Use a stable field like `employeeId`. |
 | People not appearing after sync | Wrong group selected, or people not in the scoped group | Check the group membership in Entra, then run **Sync Now**. |
+| A custom attribute is missing from the field list | The app registration lacks `Directory.Read.All`, so CaptrID could not discover your directory extension attributes. The connection test still passes, which is why this is easy to miss | Add `Directory.Read.All` as an **Application** permission, grant admin consent, then re-run **Test Connection** |
 | Photos not importing | The person has no profile photo set in Entra | Confirm the photo exists on the Entra user; people without one can receive a photo via a session or self-upload. |
 | "0 users found" in group | Group has no members, or permissions don't cover that group | Verify group membership in Entra and that the app has `GroupMember.Read.All` permission. |
