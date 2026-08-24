@@ -9,6 +9,8 @@ When a handover doc is written, the docs update should be part of the same workf
 |-----------|---------------|-------------|
 | `admin-guide/directory-sync.mdx` | Entra sync edge functions, `.claude/rules/module-directory-sync.md` | 2026-06-04 |
 | `admin-guide/airtable-sync.mdx` | Airtable wizard + webhooks, `.claude/rules/module-directory-sync.md`, `docs/integrations/airtable-integration.md` | 2026-06-04 |
+| `admin-guide/wonde-sync.mdx` | `wonde-sync` + `scheduled-wonde-sync` edge functions, `wonde_sync_wizard_screen.dart`, `docs/integrations/wonde-integration.md` | 2026-08-24 |
+| `admin-guide/axcelerate-sync.mdx` | `axcelerate-sync` + `axcelerate-push-photos` edge functions, `axcelerate_sync_wizard_screen.dart`, `docs/integrations/axcelerate-integration.md` | 2026-08-24 |
 | `admin-guide/automated-provisioning.mdx` | SCIM edge function, `.claude/rules/module-scim.md`, `docs/handovers/SCIM_HANDOVER.md` | 2026-04-02 |
 | `admin-guide/digital-cards.mdx` | Wallet pass edge functions, `.claude/rules/module-wallet-passes.md` | 2026-06-04 |
 | `admin-guide/self-service-photo-upload.mdx` | Self-upload edge functions | Unknown |

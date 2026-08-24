@@ -1,0 +1,123 @@
+---
+title: "aXcelerate Sync"
+description: "Sync students and trainers from aXcelerate into a Master List, filter by qualification, campus or faculty, and push approved photos back to your student records."
+---
+
+If your RTO runs **aXcelerate**, you can sync contacts straight into a Master List — students, trainers, or both. Enrolment data comes with them, so you can scope a list to a single qualification and issue cards to exactly that cohort.
+
+aXcelerate is the only connector that also works **outbound**: once a photo is approved in CaptrID, it can be written back onto the contact record in aXcelerate, so your student management system ends up with the photograph too.
+
+<Info>
+aXcelerate sync requires a **Pro** or **Business** plan. Pro plans support 1 sync provider; Business plans support multiple connections.
+</Info>
+
+aXcelerate connections live under **Directory Integrations**, alongside Microsoft Entra ID, Airtable and Wonde.
+
+## Step 1: Add the connection
+
+1. Go to **Directory Integrations** → **Add Connection** → **aXcelerate**
+2. Enter your API credentials from aXcelerate
+
+Connections are **shared across your CaptrID organisation** — re-use an existing one rather than adding it again for each Master List.
+
+Use **Test** on the connection card to confirm the credentials work before building a sync on top of them.
+
+## Step 2: Choose who the list syncs
+
+This is the decision that shapes everything after it.
+
+| Scope | Who it includes |
+|---|---|
+| **All** | Every active contact in aXcelerate — students, trainers and everyone else |
+| **Students** *(default)* | Learners only — contacts with an enrolment matching the status you choose |
+| **Trainers** | Your aXcelerate trainer register |
+
+<Warning>
+**Changing the scope re-syncs the whole list.** People who no longer match are removed. Choose it deliberately at setup rather than switching later.
+</Warning>
+
+<Info>
+A **Trainers** list is the one to use for staff cards. Assign it a staff profile template and a staff card design in **Credential Templates**, so trainers do not get the student card.
+
+On large tenants the trainer check runs in batches, so the first sync may take a little longer.
+</Info>
+
+### Narrowing students by enrolment status
+
+For a Students list, pick which enrolments count:
+
+| Status | Meaning |
+|---|---|
+| **Enrolled** | Contacts with a current, in-progress enrolment |
+| **Completed** | Contacts with at least one completed enrolment |
+| **Any** | Anyone with any enrolment, current or past |
+
+### Narrowing by qualification, campus or faculty
+
+Optionally narrow further — add a **qualification by code**, or a **campus** or **faculty** by name. Leave them empty to include everyone in scope.
+
+<Info>
+A qualification filter matches on the **qualification code**, so **every class and intake of that qualification counts**. You do not need to add each intake separately.
+</Info>
+
+## Step 3: Choose the unique identifier
+
+Every Master List needs one field that identifies a person and never changes.
+
+**Contact ID is always the safe choice** — it is immutable and always present. Student ID is only reliable if your RTO fills it in consistently; the wizard shows *"No value seen in the sample of contacts probed"* when it does not.
+
+## Step 4: Map your fields
+
+Standard fields are expanded by default. **Import** brings unmapped aXcelerate fields into your Master List schema in one step — new fields are added to the schema and become available everywhere in CaptrID.
+
+<Warning>
+Some aXcelerate fields hold **sensitive personal information** — USI, date of birth and similar. These are collapsed by default and are not mapped unless you choose them.
+
+Map them deliberately, and only if a card or a workflow genuinely needs them. Every field you map is a field you then hold, retain and have to answer for.
+</Warning>
+
+## Step 5: Photos in
+
+Turn on photo sync and CaptrID pulls each contact's photo from aXcelerate and re-hosts it in Australian storage.
+
+As with other connectors, choose whether it **only fills gaps** or **overwrites on every sync**. If you run photo days, use only-if-missing so an approved capture is not replaced by an older file from the SMS.
+
+## Step 6: Photos back out to aXcelerate
+
+The part no other connector does: CaptrID can write an approved photo **back onto the aXcelerate contact record**, so your SMS holds the same photograph as the card.
+
+This runs manually, on request, rather than automatically on approval.
+
+<Info>
+Photo push-back is restricted to CaptrID platform administrators at present. If you want it enabled for your organisation, [get in touch](/support).
+</Info>
+
+## Step 7: Schedule it
+
+Set a cadence to keep the list current:
+
+- Manual only (no scheduled sync)
+- Every 6 hours
+- Every 12 hours
+- Every 24 hours
+
+## A note on what you can see
+
+CaptrID reads only what your aXcelerate API credentials permit. If a field you expect is missing from the mapping step, the permissions on the credentials are the first place to look.
+
+## Related
+
+<CardGroup cols={2}>
+  <Card title="Wonde Sync" icon="school" href="/admin-guide/wonde-sync">
+    For schools — reaches TASS, Synergetic, Sentral and more
+  </Card>
+  <Card title="Airtable Sync" icon="table" href="/admin-guide/airtable-sync">
+    Sync from an Airtable base
+  </Card>
+  <Card title="Managing Master Lists" icon="list" href="/admin-guide/managing-master-lists">
+    How rosters, schema fields and UIDs work
+  </Card>
+  <Card title="Digital Cards" icon="wallet" href="/admin-guide/digital-cards">
+    Issuing wallet passes to a synced roster
+  </Card>
+</CardGroup>

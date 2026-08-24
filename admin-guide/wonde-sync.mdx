@@ -1,0 +1,140 @@
+---
+title: "Wonde Sync"
+description: "Sync your school roster — including student and staff photos — through Wonde, which connects to 35+ school management systems including TASS, Synergetic, Sentral, SIMS and Arbor."
+---
+
+If your school runs a management system that **Wonde** connects to, you can sync your roster into a Master List without CaptrID building a connector for your specific MIS. Wonde sits in the middle and speaks to 35+ systems across Australia and the UK — including **TASS**, **Synergetic**, **Sentral**, **SIMS**, **Arbor**, **Bromcom** and **iSAMS**.
+
+Photos come through too. That is the part most schools care about: the roster and the photograph arrive from the same place, so there is no USB stick to reconcile against your MIS afterwards.
+
+<Info>
+Wonde sync requires a **Pro** or **Business** plan. Pro plans support 1 sync provider; Business plans support multiple connections.
+</Info>
+
+Wonde connections live under **Directory Integrations**, alongside Microsoft Entra ID, Airtable and aXcelerate.
+
+## Before you start: access takes a few days
+
+This is the one thing worth knowing up front, because it is different from every other connector.
+
+An Entra or Airtable connection is instant — you authorise it and it works. **A Wonde connection is not.** Your school has to approve CaptrID's access, and Wonde runs an audit before switching it on. That is Wonde acting as a gatekeeper on your school's data, which is the point of using them, but it does mean **allowing a few days** between requesting access and running your first sync.
+
+Plan around it. If you have a photo day in a fortnight, request access now.
+
+## Step 1: Request access to your school
+
+1. Go to **Directory Integrations** in the sidebar
+2. Click **Add Connection** and choose **Wonde**
+3. Search for your school and select it
+4. Provide a contact at the school who can approve the request — usually the business manager or IT lead
+
+The connection appears immediately with the status **Awaiting school approval**. Nothing syncs yet.
+
+<Info>
+If your school has already approved CaptrID through Wonde, you will see it under **Add approved school** instead — *"Schools the shared Wonde token is approved for. No token needed."* Those activate straight away, so you can skip ahead to Step 3.
+</Info>
+
+## Step 2: Wait for approval
+
+Wonde emails your school contact. Once they approve and Wonde completes its audit, the connection flips to **Connected** on its own — CaptrID is told directly, so you do not need to keep checking.
+
+If the request is declined or later revoked, the connection shows *"The school revoked or declined access, so it cannot sync"* and you can request access again from **Directory Integrations**.
+
+## Step 3: Connect a school to a Master List
+
+Each Wonde connection is **one approved school**, and each Master List syncs **one roster**.
+
+Open a Master List, go to its sync settings, and choose your Wonde connection. Then pick the roster type:
+
+| Roster type | What it syncs |
+|---|---|
+| **Students** | Pupils enrolled at the school |
+| **Staff** | Employees |
+
+<Warning>
+Roster type is fixed once you finish setup. If you want both students and staff, create a **second Master List** for the other group. This is deliberate — it keeps a student list from ever picking up staff records, including their photos.
+</Warning>
+
+## Step 4: Choose the unique identifier
+
+Every Master List needs one field that uniquely identifies a person and never changes. CaptrID shows you the candidates from your school's data, with **an example value from real records** so you can see what you are choosing.
+
+Two things the wizard will tell you:
+
+- **Coverage.** If a candidate is missing from some records, you will see *"Only 47 of 50 sampled records have a Student ID."* A UID has to be on **every** record, so pick a different field or fix the gaps in your MIS first.
+- **What you can see.** Only fields your school approved for CaptrID appear. If something you expected is missing, your school's Wonde permissions are the place to look.
+
+The default label is **Student ID** or **Staff ID** depending on the roster type.
+
+<Info>
+The Wonde record id is always stored automatically as the sync anchor, separately from your chosen UID. That is what lets CaptrID match a person on the next sync even if their student number changes.
+</Info>
+
+## Step 5: Map your fields
+
+Map the Wonde fields you want onto your Master List's schema. If you map something that has no matching field yet, CaptrID offers to create it — *"Saving will add 3 new fields. These will be populated on the next sync."*
+
+**Map all** does the obvious ones in a single click.
+
+### Filters
+
+By default, everyone in the roster syncs. Add conditions to narrow it — *"Only records matching this filter will sync; others are skipped."* Conditions combine with **AND/OR**, the same way Entra and Airtable filters work.
+
+<Warning>
+Filters are easy to get backwards. After changing one, run a sync and check the count. If a sync reports records fetched but nothing created, that is a filter excluding everything — CaptrID will flag it as a warning rather than a green tick, but it is worth a look.
+</Warning>
+
+## Step 6: Photos
+
+Turn on photo sync and CaptrID pulls each person's photograph from Wonde and **re-hosts it in Australian storage**, alongside the rest of your data.
+
+Choose what happens when a person already has a photo:
+
+| Option | Behaviour |
+|---|---|
+| **Only if missing** *(recommended)* | Never overwrites an existing photo |
+| **Always overwrite from Wonde** | Wonde's copy wins on every sync |
+
+<Warning>
+**Always overwrite** replaces photos your team approved in a capture session with the MIS copy on every sync. If you run photo days *and* sync photos, use **Only if missing**.
+</Warning>
+
+If photo sync fails with a permissions error, your school's Wonde approval does not include the photo dataset. The rest of the sync carries on regardless — you will get a warning, not a failure.
+
+## Step 7: Run the first sync
+
+Click **Sync now**. The first run pulls the full roster; later runs only fetch what changed.
+
+Set a schedule to keep it current:
+
+- Manual only (no scheduled sync)
+- Every 6 hours
+- Every 12 hours
+- Every 24 hours
+
+Changes also arrive between scheduled runs — Wonde notifies CaptrID when your school's data changes.
+
+## What Wonde does not do
+
+Worth stating plainly so you can plan:
+
+- **Photo consent flags are not passed through.** If your MIS records a "do not photograph" flag, Wonde does not surface it to CaptrID, so it cannot be honoured automatically. Who is included is determined by **the roster and the filters you configure**. Keeping consent decisions reflected in your roster or filters is the school's responsibility — see our [Terms of Service](https://captrid.com/terms) §8.
+- **It is read-only.** CaptrID never writes back to your MIS through Wonde.
+- **Compass is not covered.** Wonde does not broker Compass in Australia. If your school runs Compass, [talk to us](/support) about options.
+
+## Related
+
+<CardGroup cols={2}>
+  <Card title="Directory Sync" icon="arrows-rotate" href="/admin-guide/directory-sync">
+    Microsoft Entra ID — the equivalent for staff and corporate directories
+  </Card>
+  <Card title="Airtable Sync" icon="table" href="/admin-guide/airtable-sync">
+    Sync from an Airtable base instead
+  </Card>
+  <Card title="Managing Master Lists" icon="list" href="/admin-guide/managing-master-lists">
+    How rosters, schema fields and UIDs work
+  </Card>
+  <Card title="Photo Day" icon="camera" href="/admin-guide/photo-day">
+    Running a capture session against a synced roster
+  </Card>
+</CardGroup>
