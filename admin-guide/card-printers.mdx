@@ -35,6 +35,33 @@ Discovery is per-workstation, but curation is per-organisation. You curate a pri
 
 Removing a printer takes it out of the curated list. It reappears under **Available on this workstation** if the engine still finds it, so removing is not permanent.
 
+## What each brand can do
+
+Every card printer with a Windows driver can **print** through CaptrID at full quality, including resin black text and two-sided cards. What differs is encoding — writing to a card's chip or magnetic stripe — because that needs work specific to each manufacturer.
+
+| Brand | Print | Chip encoding | Magnetic stripe |
+|---|---|---|---|
+| **Entrust / Datacard** (Sigma DS, CD, CE, SD) | Confirmed by the printer | Yes | **Yes** |
+| **Zebra** (ZC300, ZC350) | Confirmed by the printer | Yes | No — see below |
+| **Magicard** (Rio Pro 360 and family) | Confirmed by the printer | Yes | No |
+| **Matica** (XID series) | Sent to the printer | Yes | No, even when the printer reports a mag encoder fitted |
+| **Evolis** (Primacy 2, Zenius 2, Agilia, EPX) | Sent to the printer | Yes, **over USB only** | No |
+| **Any other brand** (HID Fargo, IDP, Dascom…) | Sent to the printer | No | No |
+
+Two columns worth reading carefully:
+
+**"Confirmed by the printer" vs "Sent to the printer."** Where CaptrID can ask the printer whether a card actually came out, a successful job means exactly that. Where it cannot, Windows only confirms it handed the job to the driver — so a jam or an empty hopper after that point is invisible, and the job reports *"Sent to the printer"* rather than claiming success. Treat those as "probably fine, worth a glance at the output tray".
+
+**Evolis chip encoding needs the USB cable.** Printing works happily over Ethernet, but the card encoder inside an Evolis is only reachable over USB. A networked Evolis is print-only, which is worth knowing *before* you plan where it sits.
+
+<Warning>
+**A printer having the hardware does not mean CaptrID can use it.** Several of these models ship with a magnetic encoder fitted, and a Matica will report that it has one — but only Entrust/Datacard can be driven by CaptrID.
+
+Zebra is the one that surprises people: the stripe genuinely works on the printer, and if you have encoded one with Zebra's own software you were not imagining it. CaptrID cannot, because a Zebra takes a fresh card from the hopper to write a stripe — the stripe and the printed design would land on two different cards.
+
+The capability shown in the Print Card dialog is always what CaptrID can actually do. A job asking for more is refused before a card is fed, naming what is missing, rather than printing a card with a blank chip or stripe.
+</Warning>
+
 ## PaperCut integration
 
 If your organisation runs **PaperCut NG or MF** for print management, CaptrID can write each card's number straight into PaperCut as it is printed. Staff and students then tap their new ID at the printer and it releases their job — with no one re-keying card numbers into PaperCut by hand.

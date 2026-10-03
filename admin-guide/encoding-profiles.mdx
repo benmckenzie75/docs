@@ -24,7 +24,7 @@ This is the first decision and the one worth getting right, because it depends o
 | **NTAG / NFC (tap-to-web)** | A card that opens a web page when tapped | Read by any phone. No reader needed |
 | **MIFARE Classic 1K** | Working with existing access control | Very widely supported by installed readers |
 | **DESFire EV3** | Newer access control, or tap-to-web with better security | Either a tap-to-web URL or structured data |
-| **Magnetic stripe** | Legacy systems that read a stripe | Can be combined with a chip |
+| **Magnetic stripe** | Legacy systems that read a stripe | Can be combined with a chip. **Entrust/Datacard printers only** — see [Magnetic stripe](#magnetic-stripe) |
 
 <Tip>
 If the card has to open a door, **ask whoever maintains your access control what their readers expect** before building a profile. Getting the technology wrong means reprinting the batch.
@@ -82,10 +82,33 @@ Preview the encoded bytes before saving. It is much cheaper than discovering a m
 
 ## Magnetic stripe
 
-For cards that carry both a chip and a stripe, or a stripe alone. Set the track data as your legacy system expects it.
+For cards that carry both a chip and a stripe, or a stripe alone. Set the track data as your legacy system expects it: track 1 takes letters and numbers (up to 79 characters), tracks 2 and 3 take numbers (up to 40 and 107). CaptrID checks the lengths before a card is fed and names the track that is too long.
 
 <Warning>
-**Magnetic-stripe encoding is proven at the printer but not yet wired end-to-end.** Bench-test it before relying on it for a production run.
+**Magnetic stripe needs an Entrust or Datacard printer.** No other brand CaptrID supports can write a stripe — not Zebra, Magicard, Matica or Evolis.
+
+Select a stripe profile against one of those and the job is refused, naming the brand, before a card is fed. Nothing is wasted, but the card cannot be produced.
+</Warning>
+
+On an Entrust/Datacard printer the stripe and the chip are written on the **same pass**, so one card can carry both from a single profile. The printer reads the stripe back as it writes it, so a job that reports success has been verified.
+
+### A mag head in the printer is not the same as CaptrID supporting it
+
+This catches people out, so it is worth saying plainly. Several of these printers have a magnetic encoder physically fitted, and a Matica XID will even report that it has one. That does not mean CaptrID can drive it. The capability shown in the Print Card dialog is what CaptrID can write, not what the hardware contains.
+
+Zebra is the case that surprises people. The stripe works on the printer itself — if you have encoded one using Zebra's own tools, you were not imagining it. CaptrID still cannot, for a mechanical reason: a Zebra takes a **fresh card from the hopper** to write a stripe, so the stripe and the printed artwork would end up on two different cards. Until CaptrID can send a stripe as a job on its own, it declines rather than eject two cards.
+
+### Coercivity
+
+**HiCo** and **LoCo** describe the magnetic strength your card stock needs. Writing at the wrong one wastes the card: HiCo settings on LoCo stock, or the reverse, give a stripe that reads back blank.
+
+On an Entrust/Datacard printer this is set **in the printer's own Windows driver properties**, not in CaptrID, because the printer applies one setting to every card rather than taking it per job. So:
+
+- Leave the profile on **HiCo**, which matches the printer's default.
+- If you need **LoCo**, change it in the printer's driver properties on the workstation. A profile asking CaptrID for LoCo is refused with a message pointing you there — deliberately, because quietly writing at HiCo instead would hand you a batch of blank stripes that all looked successful.
+
+<Warning>
+**If you built a magnetic stripe profile before October 2026, re-check the cards it produced.** Track data was being lost between the portal and the printer, so those jobs wrote nothing to the stripe and still reported success. The card design printed normally — only the stripe is affected. This is fixed, but the fix cannot reach cards already made.
 </Warning>
 
 ## Archiving a profile
