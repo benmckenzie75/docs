@@ -30,6 +30,16 @@ This is the first decision and the one worth getting right, because it depends o
 If the card has to open a door, **ask whoever maintains your access control what their readers expect** before building a profile. Getting the technology wrong means reprinting the batch.
 </Tip>
 
+### The cards in the hopper have to match the profile
+
+CaptrID checks the chip in the printer against the profile before it writes anything. Load DESFire stock and run it against an NTAG profile and the job is refused, naming what is loaded and what the profile expects, rather than writing to a chip that cannot take it.
+
+<Info>
+The check only refuses on a **definite** mismatch between card families. A chip CaptrID cannot identify is allowed through — some perfectly good cards do not announce themselves clearly, and refusing those would block work for no reason. So it catches the wrong box of cards, not every possible problem.
+</Info>
+
+This is worth knowing because the old failure was unhelpful: a mismatched card failed deep inside the encoder with a message that read, literally, *"The operation completed successfully"* — which told nobody that the wrong stock was loaded.
+
 ## Tap-to-web (NDEF)
 
 The simplest option: the chip holds a URL, and tapping the card with a phone opens it. Point it at the person's [profile page](/admin-guide/hosted-profile-pages) and a tap becomes an instant credential check.
