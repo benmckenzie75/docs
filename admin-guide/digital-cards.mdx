@@ -92,6 +92,8 @@ Add up to **four extra fields** that appear on the card face. Each field has:
 - **Verification mode** — QR code contains a signed verification URL (recommended)
 - **Custom field mode** — QR code displays a specific master list field value
 
+**Show on a suspended card** (on by default) keeps the barcode on a suspended card, where a verification code scans as *Suspended — do not accept*. Turn it off when another system reads the barcode — door access, printing, a canteen — because that system can't tell the card is suspended. A suspended card then carries no barcode at all, and is still marked **SUSPENDED** in amber. Reinstating brings the barcode back.
+
 ### Validity
 
 | Mode | Behaviour |
@@ -234,7 +236,7 @@ A **suspend** puts a pass on hold without cancelling it — useful for a tempora
   <img src="/images/admin-guide/wallet-suspend-modal.png" alt="Suspend Pass dialog with an optional reason field and Cancel / Suspend buttons" />
 </Frame>
 
-A suspended pass **stays in the recipient's main wallet**, marked **SUSPENDED** in amber with its barcode kept, and **shows as suspended when scanned**. It can be **unsuspended** at any time to restore it. Use suspend when the hold is temporary; use revoke when it's permanent.
+A suspended pass **stays in the recipient's main wallet**, marked **SUSPENDED** in amber with its barcode kept (unless the template's barcode is set not to [show on a suspended card](#barcode)), and **shows as suspended when scanned**. It can be **unsuspended** at any time to restore it. Use suspend when the hold is temporary; use revoke when it's permanent.
 
 <Tip>
 To suspend, reinstate and revoke cards **automatically** as people join, leave or stop meeting a condition, set up a [card policy](/admin-guide/automations) on the list instead of doing it by hand.

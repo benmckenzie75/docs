@@ -1,6 +1,6 @@
 ---
 title: "Automations"
-description: "A card policy keeps every digital card on a Master List matching who should hold one — issued, suspended, reinstated and revoked for you. Custom rules cover anything else."
+description: "A card policy keeps every digital card on a Master List matching who should hold one — issued, suspended, reinstated and revoked for you."
 ---
 
 A Master List's **Automations** tab is where you decide who should hold a valid digital card — once — and let CaptrID keep every card matching that decision as your roster changes.
@@ -21,21 +21,39 @@ You set it up as a **card policy**: who's eligible, and what happens to their ca
 
 ### Who's eligible
 
-Everyone **active** on the list, narrowed by any conditions you add — for example *Status is Current*, or *Expiry is not in the past*. Choose whether **all** conditions must be true, or **any** of them.
+Everyone **active** on the list, narrowed by any conditions you add — for example *Status is one of Current, Enrolled*, or *Expiry is not in the past*. The sentence above the conditions — **Who also match [all ▾] of these** — chooses whether **all** must be true, or **at least one**.
 
 People who are no longer active — removed from your source system, or outside your sync filter — never hold a valid card. Their card is revoked automatically, and reinstated if they come back.
 
+Each condition is one line: **Field · Condition · Value · If empty**. The conditions on offer depend on the field:
+
+| Field type | Conditions |
+|---|---|
+| Text and dropdown | **is** / **is not** one value, **is one of** / **is not one of** several, **contains**, **is empty** / **is not empty**. Values are picked from the ones people on the list actually hold, with how many hold each — or type a new one with **Other value…** |
+| Date | **is not in the past** / **is in the past** (with an optional grace period), **is today or earlier** (a start date has arrived), **is in the future**, **is** a date |
+| Email | **is a valid email** / **is not a valid email**, **domain is one of** / **domain is not one of** (picked from the domains on the list), **is** an exact address |
+| Number | **is**, **greater than**, **less than**, **at least**, **at most** |
+| Phone | **is not empty** / **is empty** |
+
+**Grace period.** On *is not in the past*, type a number of days to keep the card valid that long after the date — *Expiry is not in the past, 14 days grace* stays valid for two weeks after expiry.
+
+**If empty.** Every condition says what a blank value means: **Valid** or **Not valid**. The same condition can need either — *only suspend once the expiry has passed; no expiry is fine* wants **Valid**, while *only people with a current expiry* wants **Not valid**. New conditions start at **Not valid**, the safe direction.
+
 <Tip>
-For an expiry date, use **is not in the past**. Someone with no expiry date recorded doesn't meet it, so a missing date never hands out a card by accident.
+For an expiry date, use **is not in the past** and decide **If empty** on purpose. A valid email check catches the placeholders a source system holds ("n/a", "john.smith@") before **Issue and email** tries to send to them.
 </Tip>
+
+### Groups
+
+When some conditions are alternatives and others aren't, **Add a group**. A group has its own **Match [at least one ▾] of these** and counts as one condition above it. For example, *Status is one of 1, 2* **and** a group matching at least one of *Expiry A is not in the past* / *Expiry B is not in the past* — anyone with status 1 or 2 and either expiry still valid. Groups go one level deep; up to 10.
 
 ### What happens to their card
 
 | Setting | Choices |
 |---|---|
-| **Card template** | The template this policy decides. One per policy; the list's other templates stay manual or under custom rules. |
+| **Card template** | The template this policy decides. One per policy; the list's other templates are managed by hand. |
 | **Eligible with no card** | **Do nothing** · **Issue the card** · **Issue and email the card** |
-| **No longer eligible** | **Suspend the card** (default) · **Revoke the card** |
+| **No longer eligible** | **Suspend the card** (default) · **Revoke the card** — plus any **exceptions** (below) |
 | **Eligible again** | **Reinstate automatically** (default) · **Leave it for review** |
 | **Revoke after** | Off, or 7 to 365 days: revoke a suspended card once someone has stayed ineligible that long |
 | **Wait for a photo** | On by default: don't issue a card until the person has a photo on the list |
@@ -44,10 +62,18 @@ For an expiry date, use **is not in the past**. Someone with no expiry date reco
 
 | | What the cardholder sees | When scanned |
 |---|---|---|
-| **Suspend** — a pause | The card stays in their main wallet, marked **SUSPENDED** in amber, barcode kept | Suspended |
+| **Suspend** — a pause | The card stays in their main wallet, marked **SUSPENDED** in amber. The barcode is kept unless the card template removes it ([Digital Cards](/admin-guide/digital-cards)) | Suspended |
 | **Revoke** — they're done | The card moves to their wallet's expired passes, greyed out, details removed | Revoked |
 
 Both can be undone: reinstating brings back **the same card**, with nothing for the holder to re-add.
+
+### Exceptions
+
+Sometimes *why* someone is no longer eligible decides what should happen — status 3 means a pause, status 4 means they've left. Under **No longer eligible**, **Add an exception**: *Instead, [revoke the card] for people who match Status is 4*.
+
+- The first exception someone matches applies; everyone else gets the **No longer eligible** setting.
+- If an exception says revoke for someone whose card the policy already suspended (status 3, then 4), the card is revoked.
+- Exceptions only choose suspend or revoke. Either way, **Eligible again** still brings the same card back if they return.
 
 ### Emails
 
@@ -107,29 +133,9 @@ The status strip at the top of the tab shows the policy **On**, when it last che
 | **Held** | An automatic check found a large change — or a condition that suddenly matches nobody, usually a value renamed in your source system — and did nothing | Click **Review**: it opens the preview, and you apply it or fix the condition |
 | **Card updates failing — retrying at 16:30** | The wallet service returned errors, so CaptrID is waiting before trying again (2 minutes, then longer, up to an hour) | Usually nothing — it recovers on its own. Hover for the error |
 
-## Custom rules (advanced)
+## Custom rules
 
-For anything a policy doesn't cover, the tab still has **Custom rules** under **Custom rules (advanced)**: a rule that acts on a card when a field changes or a date passes. They're useful for a list's *other* card templates — while a policy is on, a rule can't act on the policy's own template, because the two would fight.
-
-Every rule is **when this happens → do this to their card**:
-
-| Trigger | Fires when |
-|---|---|
-| **A field changes** | A field on the person's record becomes a value you specify |
-| **A date passes** | A date field is now in the past, or falls within a set number of days (checked once a day) |
-
-| Action | Effect |
-|---|---|
-| **Issue** / **Issue & email** | Creates their card (and emails the link) |
-| **Suspend** | Puts the card on hold — it stays in their wallet, marked suspended |
-| **Reinstate** | Brings a suspended or revoked card back |
-| **Revoke** | Voids the card — it moves to their expired passes |
-
-<Warning>
-**Rules fire on the change, not on the state.** A rule watching for *Status becomes Enrolled* acts when someone *becomes* enrolled, not on everyone who already is. That's the main difference from a policy, which keeps everyone matching all the time.
-</Warning>
-
-Custom rules need **Manage Master Lists** for Coordinators — the same as before card policies existed.
+Custom rules — *when a field changes, do this to their card* — have been replaced by the card policy, which keeps everyone matching all the time rather than acting only on a change. A list that still has rules shows **Convert** (above) to move them across in one step.
 
 ## Not covered yet
 
