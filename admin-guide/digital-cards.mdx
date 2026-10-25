@@ -213,7 +213,7 @@ Large bulk jobs are processed while you watch — keep the tab open until the jo
 | **Active** | Pass in use (delivered) | Resend, Suspend, Revoke |
 | **Suspended** | Temporarily on hold | Unsuspend, Revoke |
 | **Outdated** | Person data changed since generation | Regenerate, Revoke |
-| **Revoked** | Pass permanently cancelled | Reinstate |
+| **Revoked** | Pass cancelled — moved to the holder's expired passes | Reinstate |
 | **Expired** | Validity period ended | Regenerate |
 
 Each row also shows which wallets the pass was added to (Apple / Google icons) and an **Email sent** badge once it's been distributed.
@@ -234,7 +234,11 @@ A **suspend** puts a pass on hold without cancelling it — useful for a tempora
   <img src="/images/admin-guide/wallet-suspend-modal.png" alt="Suspend Pass dialog with an optional reason field and Cancel / Suspend buttons" />
 </Frame>
 
-A suspended pass **shows as suspended when its QR code is scanned**, but stays in the recipient's wallet and can be **unsuspended** at any time to restore it. Use suspend when the hold is temporary; use revoke when it's permanent.
+A suspended pass **stays in the recipient's main wallet**, marked **SUSPENDED** in amber with its barcode kept, and **shows as suspended when scanned**. It can be **unsuspended** at any time to restore it. Use suspend when the hold is temporary; use revoke when it's permanent.
+
+<Tip>
+To suspend, reinstate and revoke cards **automatically** as people join, leave or stop meeting a condition, set up a [card policy](/admin-guide/automations) on the list instead of doing it by hand.
+</Tip>
 
 ## Revoking passes
 
@@ -244,7 +248,7 @@ When someone leaves your organisation or no longer needs their credential:
 2. Click **Revoke**
 3. Confirm the action
 
-Revoked passes are cancelled in the recipient's wallet and show as **revoked** on the verification page. You can **reinstate** a revoked pass if the decision is reversed.
+Revoked passes are cancelled in the recipient's wallet — moved to their expired passes, greyed out — and show as **revoked** on the verification page. You can **reinstate** a revoked pass if the decision is reversed: the same card comes back, with nothing for them to re-add.
 
 ### Passes are revoked automatically when data is removed
 

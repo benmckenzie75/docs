@@ -14,10 +14,10 @@ When a handover doc is written, the docs update should be part of the same workf
 | `admin-guide/hosted-profile-pages.mdx` | `profile_template_editor_screen.dart`, `student_profile_screen.dart`, branding in `organization_settings_screen.dart` | 2026-08-24 |
 | `admin-guide/encoding-profiles.mdx` | `encoding_profile_screen.dart`, `docs/card-production/NFC_IMPLEMENTATION_REFERENCE.md`, `docs/card-production/CARD_PRODUCTION_STATUS.md` §2 (per-brand magstripe support), `print_encode_engine/core/chip_match.py` (chip-family guard) | 2026-10-06 |
 | `admin-guide/card-printers.mdx` | `org_settings_card_printers_screen.dart`, `local_print_dialog.dart`, `papercut_connection_screen.dart`, `docs/integrations/papercut-integration.md`, `print_encode_engine/drivers/*.py` (`executes_encoding` + `print_confirmation` per brand), `drivers/evolis_cmd.py` `_BLOCKING_WARNINGS` (the printer-fault wording) | 2026-10-06 |
-| `admin-guide/automations.mdx` | `workflow_rules` table, `automations_tab_view.dart`, `_shared/workflow-eval.ts` | 2026-08-24 |
+| `admin-guide/automations.mdx` | Card policy: `docs/features/FEAT_LIFECYCLE_POLICY.md` (§3 suspend/revoke table, §10 copy), `widgets/lifecycle/automation_tab.dart`, `policy_preview_dialog.dart`, `.claude/rules/module-lifecycle-policy.md`; custom rules: `workflow_rules`, `automations_tab_view.dart`, `_shared/workflow-eval.ts` | 2026-10-25 |
 | `admin-guide/two-factor-authentication.mdx` | `mfa_service.dart`, `mfa_enrollment_screen.dart`, `mfa_challenge_screen.dart` | 2026-08-24 |
 | `admin-guide/automated-provisioning.mdx` | SCIM edge function, `.claude/rules/module-scim.md`, `docs/handovers/SCIM_HANDOVER.md` | 2026-04-02 |
-| `admin-guide/digital-cards.mdx` | Wallet pass edge functions, `.claude/rules/module-wallet-passes.md` | 2026-08-24 |
+| `admin-guide/digital-cards.mdx` | Wallet pass edge functions, `.claude/rules/module-wallet-passes.md` | 2026-10-25 |
 | `admin-guide/self-service-photo-upload.mdx` | Self-upload edge functions | 2026-08-24 |
 | `admin-guide/plans-and-limits.mdx` | `admin/lib/pricing_config.dart`, `docs/strategy/PRICING_AND_GTM.md` | 2026-04-02 |
 | `admin-guide/bulk-photo-upload.mdx` | Bulk upload service, `docs/handovers/BULK_PHOTO_UPLOAD_HANDOVER.md` | 2026-04-03 |
@@ -35,7 +35,7 @@ When a handover doc is written, the docs update should be part of the same workf
 | `admin-guide/audit-logs.mdx` | `log_audit_event()` RPC | 2026-06-04 |
 | `admin-guide/data-sessions.mdx` | Data session workflow | Unknown |
 | `admin-guide/inviting-team-members.mdx` | `invite-user` edge function, user management service | Unknown |
-| `admin-guide/organisation-settings.mdx` | Org settings, coordinator permissions, capture defaults (AI capture assist, auto-standardise, backdrop library) | 2026-08-15 |
+| `admin-guide/organisation-settings.mdx` | Org settings, coordinator permissions (defaults: `_coordinatorPermissionDefaults` in `role_utils.dart`), capture defaults (AI capture assist, auto-standardise, backdrop library) | 2026-10-25 |
 | `admin-guide/billing.mdx` | Stripe webhook, billing service | Unknown |
 
 ## "Unknown" = not yet audited

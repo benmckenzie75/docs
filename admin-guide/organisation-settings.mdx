@@ -17,16 +17,19 @@ Go to **Organisation Settings** in the sidebar (under the admin section).
 
 Coordinators have access to session management and photo review by default. Organisation Admins can grant additional capabilities using these toggles:
 
-| Permission | What it allows |
-|------------|---------------|
-| **View Master Lists** | Read-only access to master lists and people records |
-| **Manage Master Lists** | Create, edit, archive lists, manage people, and import from CSV (includes view access) |
-| **Manage Card Templates** | Create, edit, and delete organisation-wide card templates |
-| **Sync Session Data Back** | Apply approved changesets to push session data back to a master list |
-| **Review Data Sync** | Review and resolve conflicts in changesets before they're applied |
-| **Delete Own Sessions** | Delete sessions that the coordinator created |
+| Permission | What it allows | Default |
+|------------|---------------|:---:|
+| **View Master Lists** | Read-only access to master lists and people records | On |
+| **Manage Master Lists** | Create, edit, archive lists, manage people, and import from CSV (includes view access). Also edits a list's [custom rules](/admin-guide/automations#custom-rules-advanced) | Off |
+| **Manage Card Templates** | Create, edit, and delete organisation-wide card templates | On |
+| **Sync Session Data Back** | Apply approved changesets to push session data back to a master list | Off |
+| **Review Data Sync** | Review and resolve conflicts in changesets before they're applied | Off |
+| **Delete Own Sessions** | Delete sessions that the coordinator created | Off |
+| **Bulk Upload Photos** | Bulk upload and match photos to session people | On |
+| **Manage Card Printers** | Choose which printers appear in the Print Card dialog | Off |
+| **Manage Automations** | Change a list's [card policy](/admin-guide/automations) — who holds a valid digital card. Applying a policy can suspend or revoke many cards at once | Off |
 
-All permissions are **off by default**. Organisation Admins and Platform Admins always have full access regardless of these settings.
+Organisation Admins and Platform Admins always have full access regardless of these settings.
 
 <Frame caption="The Coordinator Permissions section in Organisation Settings showing toggle switches for each capability">
   <img src="/images/admin-guide/coordinator-permissions-toggles.png" alt="Organisation Settings screen with coordinator permission toggles for Master Lists, Card Templates, and Changeset access" />
